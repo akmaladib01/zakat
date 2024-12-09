@@ -1,0 +1,116 @@
+<form [formGroup]="payerForm" (ngSubmit)="onSubmit()" class="payer-form">
+    <!-- Section Title -->
+    <div class="form-section-title">
+      <h3>Maklumat Pembayar</h3>
+    </div>
+  
+    <!-- Row 1: ID Type, No. KP -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="identificationID">Jenis No. Syarikat *</label>
+        <select id="identificationID" formControlName="identificationID">
+          <option *ngFor="let identificationID of typeID" [value]="identificationID">{{ identificationID }}</option>
+        </select> 
+      </div>
+      <div class="form-group half-width">
+        <label for="idNumber">No. Syarikat *</label>
+        <input id="idNumber" formControlName="idNumber" />
+      </div>
+    </div> 
+
+    <!-- Row 2: nama syarikat, sektor -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="name">Nama Syarikat / Organisasi *</label>
+        <input id="name" formControlName="name"/>
+      </div>
+      <div class="form-group half-width">
+        <label for="sector">Sektor *</label>
+        <select id="sector" formControlName="sector">
+          <option *ngFor="let sector of sektor" [value]="sector">{{ sector }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Row 3: Address -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="address1">Alamat *</label>
+        <input id="address1" formControlName="address1" />
+      </div>
+      <div class="form-group half-width">
+        <label for="address1">Alamat (Line 2)</label>
+        <input id="address2" formControlName="address2"/>
+      </div>
+    </div>
+
+    <!-- Row 4: Postcode, City, State -->
+    <div class="form-row">
+      <div class="form-group one-third-width">
+        <label for="postcode">Postcode *</label>
+        <input id="postcode" formControlName="postcode"/>
+      </div>
+      <div class="form-group one-third-width">
+        <label for="city">Daerah *</label>
+        <input id="city" formControlName="city"/>
+      </div>
+      <div class="form-group one-third-width">
+        <label for="state">Negeri *</label>
+        <select id="state" formControlName="state">
+          <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        </select>
+      </div>
+    </div>
+    
+    <!-- Row 5: office no, fax no, website -->
+    <div class="form-row">
+      <div class="form-group one-third-width">
+        <label for="phoneNumber">No. Tel. Pejabat *</label>
+        <input id="phoneNumber" formControlName="phoneNumber" />
+      </div>
+      <div class="form-group one-third-width">
+        <label for="faxNumber">No. Fax</label>
+        <input id="faxNumber" formControlName="faxNumber" />
+      </div>
+      <div class="form-group one-third-width">
+        <label for="website">Website</label>
+        <input id="website" formControlName="website" />
+      </div>
+    </div>
+
+    <!-- Row 6: muslim staff, percentage -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="muslimStaff">Muslim Staff</label>
+        <input id="muslimStaff" formControlName="muslimStaff" />
+      </div>
+      <div class="form-group half-width">
+        <label for="ownershipPercentage">Peratus Hak Milik</label>
+        <input id="ownershipPercentage" formControlName="ownershipPercentage"/>
+      </div>
+    </div>
+
+    <!-- Row 6: PIC name, email, phone -->
+    <div class="form-row">
+      <div class="form-group one-third-width">
+        <label for="PICName">Nama Pegawai Dihubungi *</label>
+        <input id="PICName" formControlName="PICName" />
+      </div>
+      <div class="form-group one-third-width">
+        <label for="PICEmail">Emel Pegawai</label>
+        <input id="PICEmail" formControlName="PICEmail" />
+      </div>
+      <div class="form-group one-third-width">
+        <label for="PICPhoneNumber">No. Telefon Pegawai</label>
+        <input id="PICPhoneNumber" formControlName="PICPhoneNumber" />
+      </div>
+    </div>
+
+
+  
+    <!-- Buttons -->
+    <div class="form-row buttons-row">
+      <button type="submit" class="btn btn-submit">Simpan</button>
+      <button type="button" class="btn btn-cancel" (click)="goBack()">Kembali</button>
+    </div>
+  </form>

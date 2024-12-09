@@ -1,0 +1,22 @@
+<div class="search-container">
+    <h3>Kutipan</h3>
+    <div class="search-options">
+      <button
+        *ngFor="let option of searchOptions"
+        [class.selected]="selectedOption === option"
+        (click)="selectOption(option)"
+      >
+        {{ option }}
+      </button>
+    </div>
+  
+    <div class="search-input">
+      <input
+        type="text"
+        placeholder="Cari {{ selectedOption }}..."
+        [(ngModel)]="searchData.search"
+      />
+      <button (click)="onSearch()">Cari</button>
+    </div>
+  </div>
+  

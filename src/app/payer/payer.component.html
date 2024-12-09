@@ -1,0 +1,74 @@
+<form [formGroup]="payerForm" (ngSubmit)="onSubmit()" class="payer-form">
+    <!-- Section Title -->
+    <div class="form-section-title">
+      <h3>Maklumat Pembayar</h3>
+    </div>
+  
+    <!-- Row 1: Name, ID Type and No. KP -->
+  <div class="form-row">
+    <div class="form-group half-width">
+      <label for="name">Nama Penuh *</label>
+      <input id="name" formControlName="name"/>
+    </div>
+    <div class="form-group id-group half-width">
+      <label for="identification">No. KP *</label>
+      <div class="id-fields">
+        <select id="identificationID" formControlName="identificationID">
+          <option *ngFor="let identificationID of typeID" [value]="identificationID">{{ identificationID }}</option>
+        </select>
+        <input id="idNumber" formControlName="idNumber"/>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Row 2: Phone Number, Email -->
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label for="phoneNumber">No. Tel. Bimbit *</label>
+        <input id="phoneNumber" formControlName="phoneNumber" />
+      </div>
+      <div class="form-group half-width">
+        <label for="email">Emel *</label>
+        <input id="email" formControlName="email" type="email" />
+      </div>
+    </div>
+  
+    <!-- Row 3: Address -->
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label for="address1">Alamat *</label>
+        <input id="address1" formControlName="address1" />
+      </div>
+    </div>
+  
+    <!-- Row 4: Address 2 -->
+    <div class="form-row">
+      <div class="form-group full-width">
+        <input id="address2" formControlName="address2"/>
+      </div>
+    </div>
+  
+    <!-- Row 5: Postcode, City, State -->
+    <div class="form-row">
+      <div class="form-group one-third-width">
+        <label for="postcode">Poskod *</label>
+        <input id="postcode" formControlName="postcode"/>
+      </div>
+      <div class="form-group one-third-width">
+        <label for="city">Daerah *</label>
+        <input id="city" formControlName="city"/>
+      </div>
+      <div class="form-group one-third-width">
+        <label for="state">Negeri *</label>
+        <select id="state" formControlName="state">
+          <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <!-- Buttons -->
+    <div class="form-row buttons-row">
+      <button type="submit" class="btn btn-submit">Simpan</button>
+      <button type="button" class="btn btn-cancel" (click)="goBack()">Kembali</button>
+    </div>
+  </form>
