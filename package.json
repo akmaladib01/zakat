@@ -1,6 +1,6 @@
 {
   "name": "zakat-app",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "An offline zakat management application.",
   "author": "akmal adib",
   "build": {
@@ -35,7 +35,7 @@
     "package": "electron-forge package",
     "clean": "rimraf out",
     "make": "npm run clean && electron-forge make",
-    "publish": "npm run make && electron-forge publish"
+    "publish": "electron-forge publish"
   },
   "dependencies": {
     "@angular/animations": "^17.0.0",
@@ -79,7 +79,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "rimraf": "^6.0.1",
     "typescript": "~5.2.2",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
