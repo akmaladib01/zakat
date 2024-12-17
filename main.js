@@ -2,17 +2,100 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const Database = require('better-sqlite3');
+const { autoUpdater } = require('electron-updater');
 
-// Determine if the app is running in development mode or production mode
-const isDev = !app.isPackaged;
 
-// Resolve the absolute path to the SQLite database file
-const dbPath = isDev
-  ? path.join(__dirname, 'data_zakat.db') // Development mode: use the project directory
-  : path.join(app.getPath('userData'), 'data_zakat.db'); // Production: userData directory
+// Define database path in the userData directory
+const userDataPath = app.getPath('userData');
+const dbPath = path.join(userDataPath, 'data_zakat.db');
 
-// Initialize the SQLite database
-const db = new Database('data_zakat.db', { verbose: console.log });
+// Fallback SQL Schema
+const fallbackSchema = `
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "CODE" (
+	"codeID"	INTEGER,
+	"codeType"	TEXT NOT NULL,
+	"codeValue"	TEXT NOT NULL,
+	PRIMARY KEY("codeID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "IDENTIFICATION" (
+	"identificationID"	INTEGER,
+	"identificationName"	TEXT NOT NULL,
+	PRIMARY KEY("identificationID" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "PAYER" (
+	"payerID"	INTEGER,
+	"idNumber"	TEXT NOT NULL,
+	"name"	TEXT NOT NULL,
+	"address1"	TEXT,
+	"address2"	TEXT,
+	"postcode"	TEXT,
+	"city"	TEXT,
+	"state"	TEXT,
+	"phoneNumber"	TEXT,
+	"email"	TEXT,
+	"sector"	TEXT,
+	"muslimStaff"	INTEGER,
+	"ownershipPercentage"	REAL,
+	"PICName"	TEXT,
+	"PICEmail"	TEXT,
+	"PICPhoneNumber"	TEXT,
+	"profileID"	INTEGER,
+	"identificationID"	INTEGER,
+	PRIMARY KEY("payerID" AUTOINCREMENT),
+	FOREIGN KEY("profileID") REFERENCES "PROFILE"("profile_id")
+);
+CREATE TABLE IF NOT EXISTS "PROFILE" (
+	"profile_id"	INTEGER,
+	"profile_type"	TEXT,
+	PRIMARY KEY("profile_id")
+);
+CREATE TABLE IF NOT EXISTS "SPG" (
+	"spgID"	INTEGER,
+	"HeaderID"	TEXT NOT NULL,
+	"noCheque"	TEXT NOT NULL,
+	"bulanTahun"	TEXT NOT NULL,
+	"Amaun"	REAL NOT NULL,
+	"isSynced"	INTEGER DEFAULT 0,
+	"bankID"	INTEGER,
+	"MOPID"	INTEGER,
+	"payerID"	INTEGER,
+	PRIMARY KEY("spgID" AUTOINCREMENT),
+	FOREIGN KEY("payerID") REFERENCES "PAYER"("payerID")
+);
+CREATE TABLE IF NOT EXISTS "TRANSACTIONS" (
+	"transactionID"	INTEGER,
+	"date"	TEXT NOT NULL,
+	"time"	TEXT NOT NULL,
+	"totalAmount"	REAL NOT NULL,
+	"chequeNo"	TEXT,
+	"referenceNo"	TEXT,
+	"isSynced"	INTEGER DEFAULT 0,
+	"payerID"	INTEGER,
+	"MOPID"	INTEGER,
+	"bankID"	INTEGER,
+	PRIMARY KEY("transactionID" AUTOINCREMENT),
+	FOREIGN KEY("payerID") REFERENCES "PAYER"("payerID")
+);
+INSERT INTO "PROFILE" VALUES (1,'individu');
+INSERT INTO "PROFILE" VALUES (2,'company');
+COMMIT;
+`;
+
+// Ensure the database exists in the userData directory
+let db;
+if (!fs.existsSync(dbPath)) {
+  console.log('Database not found. Initializing with fallback schema.');
+
+  db = new Database(dbPath);
+  db.exec(fallbackSchema); // Execute the SQL schema to initialize the database
+  console.log('Database created successfully with fallback schema.');
+} else {
+  // Initialize existing database
+  db = new Database(dbPath, { verbose: console.log });
+  console.log('Existing database loaded.');
+}
+
 // Enable foreign key support
 db.pragma('foreign_keys = ON');
 
@@ -25,7 +108,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
-      contextIsolation: true, // Ensure that this is set to false if you want access to Node.js in the renderer
+      contextIsolation: true, // Ensure this is properly configured
     },
   });
 
@@ -36,8 +119,37 @@ const createWindow = () => {
   });
 };
 
+// Wait until Electron is ready before checking for updates
 app.on('ready', () => {
   createWindow();
+
+  // Check for updates and notify
+  autoUpdater.checkForUpdatesAndNotify();
+
+  autoUpdater.on('update-available', () => {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Update Available',
+      message: 'A new version is available. It will be downloaded in the background.'
+    });
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    dialog.showMessageBox({
+      type: 'question',
+      buttons: ['Restart', 'Later'],
+      defaultId: 0,
+      message: 'Update downloaded. Restart the app to apply updates?'
+    }).then((response) => {
+      if (response.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
+
+  autoUpdater.on('error', (err) => {
+    dialog.showErrorBox('Update Error', err == null ? 'unknown' : (err.stack || err).toString());
+  });
 });
 
 app.on('window-all-closed', () => {
@@ -46,11 +158,12 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
+
+// app.on('activate', () => {
+//   if (mainWindow === null) {
+//     createWindow();
+//   }
+// });
 
 // Search user/company
 ipcMain.on('search-user', (event, { profileID, searchValue, searchField }) => {

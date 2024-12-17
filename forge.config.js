@@ -5,6 +5,19 @@ module.exports = {
   packagerConfig: {
     asar: true,
   },
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'akmaladib01',
+          name: 'zakat'
+        },
+        prerelease: false,
+        draft: true
+      }
+    }
+  ],
   rebuildConfig: {},
   makers: [
     {

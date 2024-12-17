@@ -138,4 +138,8 @@ export class PayerComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['']); // Replace with the actual path for the search page
   }
+
+  payment(): void {
+    this.router.navigate(['/payment']); // Replace with the actual path for the search page
+  }
 }

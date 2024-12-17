@@ -9,13 +9,15 @@ import { SearchingComponent } from './searching/searching.component';
 import { CompanyComponent } from './company/company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PayerComponent,
     SearchingComponent,
-    CompanyComponent
+    CompanyComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,

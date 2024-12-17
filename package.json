@@ -1,15 +1,61 @@
 {
   "name": "zakat-app",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "An offline zakat management application.",
   "author": "akmal adib",
+  "build": {
+    "appId": "com.example.zakat-app",
+    "productName": "zakat-app",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "akmaladib01",
+        "repo": "zakat"
+      }
+    ]
+  },
+  "forge": {
+    "packagerConfig": {
+      "icon": "assets/icon.png"
+    },
+    "makers": [
+      {
+        "name": "@electron-forge/maker-squirrel",
+        "config": {
+          "name": "zakat-app"
+        }
+      },
+      {
+        "name": "@electron-forge/maker-dmg",
+        "config": {}
+      },
+      {
+        "name": "@electron-forge/maker-deb",
+        "config": {}
+      },
+      {
+        "name": "@electron-forge/maker-rpm",
+        "config": {}
+      }
+    ],
+    "plugins": [
+      [
+        "@electron-forge/plugin-auto-unpack-natives",
+        {}
+      ]
+    ]
+  },
   "main": "main.js",
   "extraResources": [
-  {
-    "from": "data_zakat.db",
-    "to": "data_zakat.db"
-  }
-],
+    {
+      "from": "data_zakat.db",
+      "to": "data_zakat.db"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akmaladib01/zakat.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",

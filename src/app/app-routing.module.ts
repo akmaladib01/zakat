@@ -3,12 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { PayerComponent } from './payer/payer.component';
 import { SearchingComponent } from './searching/searching.component';
 import { CompanyComponent } from './company/company.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   { path: '', component: SearchingComponent }, // Default route for the searching page
 
   // Route for searching (explicit)
   { path: 'search', component: SearchingComponent },
+
+  { path: 'payment', component: PaymentComponent },
 
   // Route for the payer page with dynamic parameters
   { path: 'payer/:profileID/:searchValue/:searchField', component: PayerComponent },
