@@ -1,6 +1,15 @@
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const Database = require('better-sqlite3');
+
+// Determine if the app is running in development mode or production mode
+const isDev = !app.isPackaged;
+
+// Resolve the absolute path to the SQLite database file
+const dbPath = isDev
+  ? path.join(__dirname, 'data_zakat.db') // Development mode: use the project directory
+  : path.join(app.getPath('userData'), 'data_zakat.db'); // Production: userData directory
 
 // Initialize the SQLite database
 const db = new Database('data_zakat.db', { verbose: console.log });

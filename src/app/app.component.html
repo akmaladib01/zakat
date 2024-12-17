@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<header>
+    <div>My App</div>
+    <div class="status">
+      <div
+        id="indicator"
+        class="indicator"
+        [style.background]="isOnline ? 'green' : 'red'">
+      </div>
+      <span id="status">{{ status }}</span>
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+  

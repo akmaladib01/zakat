@@ -1,0 +1,33 @@
+header {
+    background: #222;
+    color: white;
+    padding: 10px 15px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    z-index: 1000;
+  
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  
+      span {
+        font-weight: bold;
+      }
+  
+      .indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: green;
+      }
+    }
+  }
+  
