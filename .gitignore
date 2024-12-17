@@ -40,7 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-out/make/squirrel.windows/x64/zakat-app-1.0.0 Setup.exe
-out/make/squirrel.windows/x64/zakat_app-1.0.0-full.nupkg
-out/zakat-app-win32-x64/zakat-app.exe
-out/zakat-app-win32-x64/resources/app.asar
