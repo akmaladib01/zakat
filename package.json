@@ -4,7 +4,7 @@
   "description": "An offline zakat management application.",
   "author": "akmal adib",
   "build": {
-    "appId": "com.example.zakat-app",
+    "appId": "com.zakat-app.id",
     "productName": "zakat-app",
     "publish": [
       {
@@ -12,37 +12,6 @@
         "owner": "akmaladib01",
         "repo": "zakat"
       }
-    ]
-  },
-  "forge": {
-    "packagerConfig": {
-      "icon": "assets/icon.png"
-    },
-    "makers": [
-      {
-        "name": "@electron-forge/maker-squirrel",
-        "config": {
-          "name": "zakat-app"
-        }
-      },
-      {
-        "name": "@electron-forge/maker-dmg",
-        "config": {}
-      },
-      {
-        "name": "@electron-forge/maker-deb",
-        "config": {}
-      },
-      {
-        "name": "@electron-forge/maker-rpm",
-        "config": {}
-      }
-    ],
-    "plugins": [
-      [
-        "@electron-forge/plugin-auto-unpack-natives",
-        {}
-      ]
     ]
   },
   "main": "main.js",
