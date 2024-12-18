@@ -49,6 +49,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "better-sqlite3": "^11.6.0",
+    "electron-log": "^5.2.4",
     "electron-squirrel-startup": "^1.0.1",
     "electron-updater": "^6.3.9",
     "ngx-electron": "^2.2.0",
