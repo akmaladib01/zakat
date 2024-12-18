@@ -24,10 +24,11 @@ function createWindow() {
   });
 
   const startURL = app.isPackaged
-    ? `file://${path.join(__dirname, 'browser', 'index.html')}` // For packaged app
+    ? `file://${path.join(__dirname, 'dist/zakat/browser/index.html')}` // For packaged app
     : `file://${path.join(__dirname, 'dist/zakat/browser/index.html')}`; // Development mode
 
   console.log('Loading URL:', startURL);
+  
   mainWindow.loadURL(startURL);
 
   mainWindow.on('closed', () => {

@@ -4,13 +4,21 @@
   "description": "An offline zakat management application.",
   "author": "akmal adib",
   "build": {
+    "files": [
+    "dist/**/*",
+    "main.js",
+    "preload.js",
+    "browser/**/*",
+    "db/**/*",
+    "ipc/**/*"
+  ],
     "appId": "com.zakat-app.kutipan",
     "productName": "Zakat App",
     "win":{
       "target": "nsis"
     },
     "directories": {
-      "output" : "dist"
+      "output" : "out"
     },
     "publish": [
     {
@@ -41,8 +49,7 @@
   "test": "ng test",
   "electron": "ng build && electron .",
   "package": "electron-builder --dir",
-  "clean": "rimraf dist",
-  "make": "npm run clean && electron-builder",
+  "make": "electron-builder",
   "publish": "electron-builder --publish always"
 },
   "dependencies": {
