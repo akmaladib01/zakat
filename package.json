@@ -1,6 +1,6 @@
 {
   "name": "zakat-app",
-  "version": "1.0.15",
+  "version": "1.0.14",
   "description": "An offline zakat management application.",
   "author": "akmal adib",
   "build": {
