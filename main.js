@@ -7,11 +7,11 @@ require('./db/database'); // Initialize database
 require('./ipc/userHandlers'); // Load IPC Handlers
 require('./ipc/companyHandlers'); // Load IPC Handlers
 
-// Setup electron-log
-log.transports.file.level = 'info'; // Log level set to 'info'
-autoUpdater.logger = log; // Assign logger to autoUpdater
-
 let mainWindow;
+
+// Configure logging
+log.transports.file.level = 'info';
+autoUpdater.logger = log;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -22,60 +22,63 @@ function createWindow() {
       contextIsolation: true,
     },
   });
+
   mainWindow.loadURL(`file://${__dirname}/dist/zakat/browser/index.html`);
-  mainWindow.on('closed', () => (mainWindow = null));
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
-app.on('ready', () => {
-  createWindow();
-
-  // Log app readiness
-  log.info('App is ready and window created.');
-
-  // Check for updates and log the process
-  autoUpdater.checkForUpdatesAndNotify();
-  log.info('Checking for updates...');
-
+// Handle Auto-Updater Events
+function setupAutoUpdater() {
   autoUpdater.on('checking-for-update', () => {
     log.info('Checking for updates...');
   });
 
   autoUpdater.on('update-available', (info) => {
     log.info(`Update available: Version ${info.version}`);
-    dialog.showMessageBox({
+    dialog.showMessageBox(mainWindow, {
       type: 'info',
       title: 'Update Available',
-      message: 'A new version is available. It will be downloaded in the background.',
+      message: 'A new update is available. It will be downloaded in the background.',
     });
   });
 
   autoUpdater.on('update-not-available', () => {
-    log.info('No update available.');
+    log.info('No updates available.');
   });
 
   autoUpdater.on('update-downloaded', (info) => {
     log.info(`Update downloaded: Version ${info.version}`);
     dialog
-      .showMessageBox({
+      .showMessageBox(mainWindow, {
         type: 'question',
         buttons: ['Restart', 'Later'],
         defaultId: 0,
-        message: 'Update downloaded. Restart the app to apply updates?',
+        title: 'Update Ready',
+        message: 'Update downloaded. Would you like to restart the app now?',
       })
       .then((response) => {
         if (response.response === 0) {
-          log.info('Restarting to install update...');
           autoUpdater.quitAndInstall();
         }
       });
   });
 
   autoUpdater.on('error', (err) => {
-    log.error('Update error:', err == null ? 'unknown' : (err.stack || err).toString());
-    dialog.showErrorBox('Update Error', err == null ? 'unknown' : (err.stack || err).toString());
+    log.error('Update error:', err);
   });
+
+  autoUpdater.checkForUpdatesAndNotify();
+}
+
+app.on('ready', () => {
+  createWindow();
+  setupAutoUpdater();
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
