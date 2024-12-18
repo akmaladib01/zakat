@@ -29,14 +29,6 @@ function createWindow() {
 app.on('ready', () => {
   createWindow();
 
-  autoUpdater.setFeedURL({
-    provider: 'github',
-    owner: 'akmaladib01',
-    repo: 'zakat',
-    //token: '<your_github_token>',  // Use if your repo is private, else omit it
-  });
-  
-
   // Log app readiness
   log.info('App is ready and window created.');
 

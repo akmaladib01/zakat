@@ -1,12 +1,11 @@
 {
   "name": "zakat-app",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "An offline zakat management application.",
   "author": "akmal adib",
   "build": {
     "appId": "com.zakat-app.id",
     "productName": "zakat-app",
-    "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
         "provider": "github",
@@ -74,6 +73,7 @@
     "@electron/fuses": "^1.8.0",
     "@types/jasmine": "~5.1.0",
     "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
     "electron-rebuild": "^3.2.9",
     "electron-updater": "^6.3.9",
     "jasmine-core": "~5.1.0",

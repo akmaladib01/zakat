@@ -10,6 +10,7 @@ import { CompanyComponent } from './company/company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentComponent } from './payment/payment.component';
+import { BayarComponent } from './bayar/bayar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PaymentComponent } from './payment/payment.component';
     PayerComponent,
     SearchingComponent,
     CompanyComponent,
-    PaymentComponent
+    PaymentComponent,
+    BayarComponent
   ],
   imports: [
     BrowserModule,
