@@ -74,7 +74,6 @@
     "@electron/fuses": "^1.8.0",
     "@types/jasmine": "~5.1.0",
     "electron": "^33.2.1",
-    "electron-builder": "^25.1.8",
     "electron-rebuild": "^3.2.9",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
