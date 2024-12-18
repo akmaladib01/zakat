@@ -10,7 +10,8 @@
       {
         "provider": "github",
         "owner": "akmaladib01",
-        "repo": "zakat"
+        "repo": "zakat",
+        "releaseType": "release"
       }
     ]
   },
@@ -51,7 +52,6 @@
     "better-sqlite3": "^11.6.0",
     "electron-log": "^5.2.4",
     "electron-squirrel-startup": "^1.0.1",
-    "electron-updater": "^6.3.9",
     "ngx-electron": "^2.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -74,6 +74,7 @@
     "@types/jasmine": "~5.1.0",
     "electron": "^33.2.1",
     "electron-rebuild": "^3.2.9",
+    "electron-updater": "^6.3.9",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
