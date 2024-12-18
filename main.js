@@ -33,7 +33,7 @@ app.on('ready', () => {
     provider: 'github',
     owner: 'akmaladib01',
     repo: 'zakat',
-    // token: '<your_github_token>',  // Use if your repo is private, else omit it
+    //token: '<your_github_token>',  // Use if your repo is private, else omit it
   });
   
 
