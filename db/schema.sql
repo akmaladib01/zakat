@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS "PAYER" (
     "city" TEXT,
     "state" TEXT,
     "phoneNumber" TEXT,
+    "faxNumber"	TEXT,
+	"website"	TEXT,
     "email" TEXT,
     "sector" TEXT,
     "muslimStaff" INTEGER,
@@ -27,8 +29,6 @@ CREATE TABLE IF NOT EXISTS "PAYER" (
     "PICPhoneNumber" TEXT,
     "profileID" INTEGER,
     "identificationID" INTEGER,
-    "faxNumber"	TEXT,
-	"website"	TEXT,
     FOREIGN KEY("profileID") REFERENCES "PROFILE"("profile_id")
 );
 CREATE TABLE IF NOT EXISTS "PROFILE" (

@@ -6,7 +6,6 @@ require('./ipc/userHandlers'); // Load IPC Handlers
 require('./ipc/companyHandlers'); // Load IPC Handlers
 
 let mainWindow;
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1250,
@@ -16,7 +15,6 @@ function createWindow() {
       contextIsolation: true,
     },
   });
-
   mainWindow.loadURL(`file://${__dirname}/dist/zakat/browser/index.html`);
   mainWindow.on('closed', () => (mainWindow = null));
 }
@@ -47,7 +45,7 @@ app.on('ready', () => {
       }
     });
   });
-
+  
   autoUpdater.on('error', (err) => {
     dialog.showErrorBox('Update Error', err == null ? 'unknown' : (err.stack || err).toString());
   });
