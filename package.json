@@ -6,6 +6,7 @@
   "build": {
     "appId": "com.zakat-app.id",
     "productName": "zakat-app",
+    "generateUpdatesFilesForAllChannels": true,
     "publish": [
       {
         "provider": "github",
