@@ -1,2 +1,51 @@
-<p>payment jadi la 18!!!!!</p>
-<p>sudah jadi 18</p>
+<div class="container">
+    <!-- Left Side: Form -->
+    <div class="left-side">
+        <form [formGroup]="zakatForm" (ngSubmit)="saveZakat()" class="payment-form">
+            <!-- Section Title -->
+            <div class="form-section-title">
+                <h3>Maklumat Zakat</h3>
+            </div>
+
+            <!-- Row 1: Jenis Zakat -->
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="jenisZakat">Pilih Jenis Zakat *</label>
+                    <select id="jenisZakat" formControlName="jenisZakat" placeholder="Pilih jenis zakat">
+                        <option *ngFor="let jenisZakat of typeZakat" [value]="jenisZakat">{{ jenisZakat }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Row 2: Jumlah Bayaran -->
+            <div class="form-row">
+                <div class="form-group full-width">
+                    <label for="amount">Jumlah Bayaran (RM) *</label>
+                    <input id="amount" formControlName="amount" type="number" placeholder="Masukkan jumlah" min="1" required />
+                </div>
+            </div>
+
+            <!-- Row 3: Buttons -->
+            <div class="form-row buttons-row">
+                <button type="submit" class="btn btn-submit">Simpan</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Right Side: Selected Zakat List -->
+    <div class="right-side">
+        <h3>Senarai Zakat yang Dipilih</h3>
+        <div *ngIf="zakatList.length === 0" class="empty-list-message">Tiada zakat dipilih.</div>
+        <ul class="zakat-list">
+            <li *ngFor="let zakat of zakatList; let i = index" class="zakat-item">
+                <div class="zakat-details">
+                    <span>Jenis Zakat: {{ zakat.jenis }}</span>
+                    <span>Jumlah: RM{{ zakat.amount }}</span>
+                </div>
+                <button class="btn-icon" (click)="deleteZakat(i)">
+                    <i class="fa fa-trash"></i>
+                </button>                
+            </li>
+        </ul>
+    </div>
+</div>
