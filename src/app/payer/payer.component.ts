@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-payer',
@@ -34,7 +35,7 @@ export class PayerComponent implements OnInit {
     'TERENGGANU'
   ];
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private location: Location) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private location: Location, private snackBar: MatSnackBar) {
     this.payerForm = this.fb.group({
       payerID: [''],
       idNumber: [''],
@@ -103,7 +104,7 @@ export class PayerComponent implements OnInit {
     window['ipcRenderer'].removeAllListeners('payer-updated');
 
     if (!formData.profileID) { 
-      alert('Profile ID is missing!');
+      this.openSnackBar('Profile ID is missing!');
       return;
     }
 
@@ -114,9 +115,9 @@ export class PayerComponent implements OnInit {
 
         window['ipcRenderer'].on('payer-registered', (_, result) => {
           if (result.success) {
-            alert('Payer registered successfully.');
+            this.openSnackBar('Payer registered successfully.');
           } else {
-            alert('Error registering payer: ' + result.error);
+            this.openSnackBar('Error registering payer: ' + result.error);
           }
         });
       } else {
@@ -125,9 +126,9 @@ export class PayerComponent implements OnInit {
 
         window['ipcRenderer'].on('payer-updated', (_, result) => {
           if (result.success) {
-            alert('Payer updated successfully.');
+            this.openSnackBar('Payer updated successfully.');
           } else {
-            alert('Error updating payer: ' + result.error);
+            this.openSnackBar('Error updating payer: ' + result.error);
           }
         });
       }
@@ -146,5 +147,13 @@ export class PayerComponent implements OnInit {
   payment(): void {
     const payerID = this.payerForm.get('payerID')?.value
     this.router.navigate(['/payment', payerID])
+  }
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }

@@ -10,6 +10,34 @@
   border-radius: 8px; /* Optional: Add rounding for aesthetic */
 }
 
+#name {
+  text-transform: uppercase;
+}
+
+#address1 {
+  text-transform: uppercase;
+}
+
+#address2 {
+  text-transform: uppercase;
+}
+
+#city {
+  text-transform: uppercase;
+}
+
+#PICName {
+  text-transform: uppercase;
+}
+
+#PICEmail {
+  text-transform: uppercase;
+}
+
+#PICPhoneNumber {
+  text-transform: uppercase;
+}
+
 .left-side,
 .right-side {
   flex: 1;
@@ -234,4 +262,15 @@ select:focus {
   width: auto;  /* Ensure the button width is automatic */
   max-width: 180px;  /* Set a maximum width */
   text-align: center;  /* Center the text */
+}
+
+::ng-deep .mat-snack-bar-container {
+  width: 400px;  /* Set the width of the Snackbar */
+  height: 60px;  /* Set the height of the Snackbar */
+  border-radius: 8px; /* Optionally, add rounded corners */
+}
+
+::ng-deep .mat-snack-bar-content {
+  font-size: 16px; /* Change the font size */
+  padding: 16px;   /* Customize the padding */
 }

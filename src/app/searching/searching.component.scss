@@ -10,6 +10,10 @@
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    #name {
+      text-transform: uppercase;
+    }
   
     h3 {
       font-size: 1.5rem;
@@ -93,6 +97,31 @@
           background-color: #1e7e34;
         }
       }
+
+      .btn-daftar {
+        background-color: #007bff; /* Blue color for "Daftar" */
+        color: #fff;
+        border: none;
+    
+        &:hover {
+          background-color: #0056b3; /* Darker blue on hover */
+        }
+    
+        &:active {
+          background-color: #004085; /* Even darker blue on active */
+        }
+      }
+    }
+
+    ::ng-deep .mat-snack-bar-container {
+      width: 400px;  /* Set the width of the Snackbar */
+      height: 60px;  /* Set the height of the Snackbar */
+      border-radius: 8px; /* Optionally, add rounded corners */
+    }
+    
+    ::ng-deep .mat-snack-bar-content {
+      font-size: 16px; /* Change the font size */
+      padding: 16px;   /* Customize the padding */
     }
   }
   

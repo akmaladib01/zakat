@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { ZakatService } from '../services/zakat.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-payment',
@@ -56,7 +57,8 @@ export class PaymentComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private zakatService: ZakatService,
     private router: Router,
-    private location: Location // Add ChangeDetectorRef
+    private location: Location,
+    private snackBar: MatSnackBar
   ) {
     this.zakatForm = this.fb.group({
       jenisZakat: ['', Validators.required],
@@ -85,10 +87,10 @@ export class PaymentComponent implements OnInit {
         this.zakatForm.reset();
         this.cdr.detectChanges();
       } else {
-        alert('Jenis zakat tidak sah.');
+        this.openSnackBar('Jenis zakat tidak sah.');
       }
     } else {
-      alert('Sila lengkapkan semua medan.');
+      this.openSnackBar('Sila lengkapkan semua medan.');
     }
   }
 
@@ -113,5 +115,13 @@ export class PaymentComponent implements OnInit {
     const zakatListForBank = this.zakatList.map(({ jenis, id, amount }) => ({ jenis, id, amount }));
     this.zakatService.setZakatList(zakatListForBank);
     this.router.navigate(['/bank', this.payerID]);
+  }
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }

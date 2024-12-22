@@ -21,6 +21,7 @@ const routes: Routes = [
 
   // Route for the company page with dynamic parameters
   { path: 'company/:profileID/:searchValue/:searchField', component: CompanyComponent },
+
 ];
 
 @NgModule({

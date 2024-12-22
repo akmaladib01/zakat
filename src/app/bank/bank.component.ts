@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ZakatService } from '../services/zakat.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-bank',
@@ -118,7 +119,8 @@ export class BankComponent implements OnInit {
     private zakatService: ZakatService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.bankForm = this.fb.group({
       caraPembayaran: ['', Validators.required],
@@ -180,7 +182,7 @@ export class BankComponent implements OnInit {
           };
           console.log('Submitted Payment Data:', this.submittedPaymentData);
         } else {
-          alert('Bank not found in mapping.');
+          this.openSnackBar('Bank not found in mapping.');
         }
       } else if (paymentMethod === 'CASH') {
         // For CASH, exclude bank and noCheque
@@ -193,7 +195,7 @@ export class BankComponent implements OnInit {
         console.log('Submitted Payment Data:', this.submittedPaymentData);
       }
     } else {
-      alert('Please complete all required fields.');
+      this.openSnackBar('Please complete all required fields.');
     }
   }
   
@@ -260,22 +262,30 @@ export class BankComponent implements OnInit {
               // Listen for the response when zakat details are saved
               window['ipcRenderer'].on('zakat-details-saved', (_, result) => {
                 if (result.success) {
-                  alert('Payment and zakat details saved successfully!');
+                  this.openSnackBar('Payment and zakat details saved successfully!');
+                  this.deletePaymentData();
                 } else {
-                  alert('Error saving zakat details: ' + result.error);
+                  this.openSnackBar('Error saving zakat details: ' + result.error);
                 }
               });
             } else {
-              alert('Error saving transaction: ' + result.error);
+              this.openSnackBar('Error saving transaction: ' + result.error);
             }
           });
         });
       }
     } else {
-      alert('Please complete all required fields.');
+      this.openSnackBar('Please complete all required fields.');
       console.log(this.bankForm.value);
     }
   }
   
   
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
+  }
 }

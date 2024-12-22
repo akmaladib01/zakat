@@ -107,3 +107,14 @@
       margin-right: 10px;
     }
   }
+
+  ::ng-deep .mat-snack-bar-container {
+    width: 400px;  /* Set the width of the Snackbar */
+    height: 60px;  /* Set the height of the Snackbar */
+    border-radius: 8px; /* Optionally, add rounded corners */
+  }
+  
+  ::ng-deep .mat-snack-bar-content {
+    font-size: 16px; /* Change the font size */
+    padding: 16px;   /* Customize the padding */
+  }

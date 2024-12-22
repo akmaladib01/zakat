@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -36,7 +37,7 @@ export class CompanyComponent {
     'TERENGGANU'
   ];
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private snackBar: MatSnackBar) {
     this.payerForm = this.fb.group({
       payerID: [''],
       idNumber: [''],
@@ -113,7 +114,7 @@ export class CompanyComponent {
     window['ipcRenderer'].removeAllListeners('company-registered');
 
     if (!formData.profileID) { 
-      alert('Profile ID is missing!');
+      this.openSnackBar('Profile ID is missing!');
       return;
     }
 
@@ -124,9 +125,9 @@ export class CompanyComponent {
 
         window['ipcRenderer'].on('company-registered', (_, result) => {
           if (result.success) {
-            alert('Company registered successfully.');
+            this.openSnackBar('Company registered successfully.');
           } else {
-            alert('Error registering payer: ' + result.error);
+            this.openSnackBar('Error registering payer: ' + result.error);
           }
         });
       } else {
@@ -135,9 +136,9 @@ export class CompanyComponent {
 
         window['ipcRenderer'].on('company-updated', (_, result) => {
           if (result.success) {
-            alert('Company updated successfully.');
+            this.openSnackBar('Company updated successfully.');
           } else {
-            alert('Error updating company: ' + result.error);
+            this.openSnackBar('Error updating company: ' + result.error);
           }
         });
       }
@@ -156,5 +157,13 @@ export class CompanyComponent {
   payment(): void {
     const payerID = this.payerForm.get('payerID')?.value
     this.router.navigate(['/payment', payerID])
+  }
+
+  openSnackBar(message: string): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }
