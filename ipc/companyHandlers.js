@@ -40,7 +40,7 @@ ipcMain.on('register-company', (event, formData) => {
 // Fetch company
 ipcMain.on('fetch-company', (event, { searchValue, profileID, isSearchByName }) => {
   const stmt = db.prepare(`
-    SELECT idNumber, name, sector, identificationID, address1, address2, postcode, city, state, phoneNumber,
+    SELECT payerID, idNumber, name, sector, identificationID, address1, address2, postcode, city, state, phoneNumber,
     faxNumber, website, muslimStaff, ownershipPercentage, PICName, PICEmail, PICPhoneNumber, profileID
     FROM PAYER
     WHERE profileID = ? AND ${isSearchByName ? 'name LIKE ?' : 'idNumber = ?'}

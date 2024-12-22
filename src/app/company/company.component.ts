@@ -38,6 +38,7 @@ export class CompanyComponent {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.payerForm = this.fb.group({
+      payerID: [''],
       idNumber: [''],
       name: [''],
       sector: [''],
@@ -88,15 +89,17 @@ export class CompanyComponent {
           if (payerData) {
             this.isNewRegistration = false; // Existing payer
             this.payerForm.patchValue(payerData);
+            const payerID = payerData.payerID;
+            console.log('Fetched payerID:', payerID);
           } else {
             this.isNewRegistration = true; // New registration
-            console.log('No payer found, form remains empty for new registration.');
+            console.log('No company found, form remains empty for new registration.');
           }
         });
   
         window['ipcRenderer'].on('company-not-found', () => {
           this.isNewRegistration = true; // New registration
-          console.log('No payer found, form remains empty for new registration.');
+          console.log('No company found, form remains empty for new registration.');
         });
       }
     });
@@ -121,7 +124,7 @@ export class CompanyComponent {
 
         window['ipcRenderer'].on('company-registered', (_, result) => {
           if (result.success) {
-            alert('Payer registered successfully.');
+            alert('Company registered successfully.');
           } else {
             alert('Error registering payer: ' + result.error);
           }
@@ -148,5 +151,10 @@ export class CompanyComponent {
 
   goBack(): void {
     this.router.navigate(['']); // Replace with the actual path for the search page
+  }
+
+  payment(): void {
+    const payerID = this.payerForm.get('payerID')?.value
+    this.router.navigate(['/payment', payerID])
   }
 }

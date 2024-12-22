@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-payer',
@@ -33,8 +34,9 @@ export class PayerComponent implements OnInit {
     'TERENGGANU'
   ];
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.payerForm = this.fb.group({
+      payerID: [''],
       idNumber: [''],
       name: [''],
       identificationID: ['KP Baru'],
@@ -78,6 +80,8 @@ export class PayerComponent implements OnInit {
           if (payerData) {
             this.isNewRegistration = false; // Existing payer
             this.payerForm.patchValue(payerData);
+            const payerID = payerData.payerID;
+            console.log('Fetched payerID:', payerID);
           } else {
             this.isNewRegistration = true; // New registration
             console.log('No payer found, form remains empty for new registration.');
@@ -92,7 +96,7 @@ export class PayerComponent implements OnInit {
     });
   }
 
-  //function submit data to db
+  //function submit into db
   onSubmit(): void {
     const formData = this.payerForm.value;
     window['ipcRenderer'].removeAllListeners('update-payer');
@@ -136,10 +140,11 @@ export class PayerComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['']); // Replace with the actual path for the search page
+    this.location.back();
   }
 
   payment(): void {
-    this.router.navigate(['/payment']); // Replace with the actual path for the search page
+    const payerID = this.payerForm.get('payerID')?.value
+    this.router.navigate(['/payment', payerID])
   }
 }

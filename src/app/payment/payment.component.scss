@@ -1,63 +1,71 @@
 .container {
     display: flex;
     gap: 20px;
-    padding: 20px;
+    padding: 5px; /* Reduced padding */
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
-}
-
-.left-side,
-.right-side {
+    max-height: 600px; /* Set a maximum height for the container */
+    overflow-y: auto; /* Enable scrolling if content exceeds max height */
+    border-radius: 8px; /* Optional: Add rounding for aesthetic */
+  }
+  
+  .left-side,
+  .right-side {
     flex: 1;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-h2,
-h3 {
+  }
+  
+  h2,
+  h3 {
     margin-bottom: 20px;
     font-size: 1.5rem;
     text-align: center;
     color: #333;
-}
-
-.form-group {
+  }
+  
+  .form-group {
     margin-bottom: 20px;
-}
-
-label {
+  }
+  
+  label {
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
     font-size: 0.95rem;
     color: #555;
-}
-
-input,
-select {
+  }
+  
+  input,
+  select {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1rem;
     box-sizing: border-box;
     background-color: #f9f9f9;
-}
-
-input:focus,
-select:focus {
+  }
+  
+  input:focus,
+  select:focus {
     outline: none;
     border-color: #007bff;
     background-color: #fff;
-}
+  }
+  
+  .buttons-row {
+    display: flex;
+    gap: 10px; /* Add gap between buttons */
+  }
 
-button {
+  button {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
@@ -66,9 +74,13 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-}
 
-.btn-icon {
+    &.btn-cancel {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+  .btn-icon {
     background: none;
     border: none;
     color: #ff4d4d;
@@ -78,25 +90,24 @@ button {
     top: 10px;
     right: 10px;
     transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-icon:hover {
+  }
+  
+  .btn-icon:hover {
     color: #cc0000;
     transform: scale(1.1);
-}
-
-.fa-trash {
+  }
+  
+  .fa-trash {
     font-size: 1.2rem; /* Icon size */
-}
-
-
-.zakat-list {
+  }
+  
+  .zakat-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
-}
-
-.zakat-item {
+  }
+  
+  .zakat-item {
     position: relative; /* To position the delete icon */
     margin-bottom: 15px;
     padding: 12px;
@@ -106,34 +117,123 @@ button {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 0.95rem;
     color: #333;
-}
-
-.zakat-details {
+  }
+  
+  .zakat-details {
     display: flex;
     flex-direction: column;
-}
-
-.zakat-details span {
+  }
+  
+  .zakat-details span {
     margin: 2px 0;
     font-size: 0.9rem;
     color: #555;
-}
-
-.empty-list-message {
+  }
+  
+  .empty-list-message {
     text-align: center;
     color: #777;
     font-size: 0.95rem;
     margin-top: 20px;
-}
-
-@media (max-width: 768px) {
+  }
+  
+  /* Dropdown Specific Styling */
+  select {
+    max-height: 150px; /* Limit the dropdown height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add padding for better appearance */
+  }
+  
+  select option {
+    white-space: nowrap; /* Prevent text wrapping */
+  }
+  
+  select:focus {
+    outline: none; /* Remove the default focus outline */
+    border-color: #007bff;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .container {
-        flex-direction: column;
-        gap: 30px;
+      flex-direction: column;
+      gap: 30px;
     }
-
+  
     .left-side,
     .right-side {
-        width: 100%;
+      width: 100%;
     }
+
+    /* New Styles for Payment Container */
+.bank-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
 }
+
+.bank-list li {
+  margin-bottom: 10px;
+}
+
+.total-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Space between the two elements */
+  align-items: center; /* Ensures vertical alignment */
+}
+
+.half-width {
+  flex: 1; /* Each item will take an equal share of the available space */
+  max-width: calc(50% - 10px); /* Ensures equal width, accounting for gap */
+}
+
+#paymentMethod,
+#paymentDate {
+  width: 100%; /* Ensure full width within the half-width container */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box; /* Prevent overflow due to padding */
+}
+
+#totalAmount {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+}
+
+/* Center the button in its container */
+.next-button-container {
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  margin-top: 20px; /* Space from the form container */
+  width: 100%;  /* Ensure it takes full width of the container */
+}
+
+.seterusnya-button {
+  padding: 10px 20px;  /* Smaller padding */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;  /* Green background */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto;  /* Ensure the button width is automatic */
+  max-width: 180px;  /* Set a maximum width */
+  text-align: center;  /* Center the text */
+}
+

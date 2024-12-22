@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentComponent } from './payment/payment.component';
 import { BayarComponent } from './bayar/bayar.component';
+import { BankComponent } from './bank/bank.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BayarComponent } from './bayar/bayar.component';
     SearchingComponent,
     CompanyComponent,
     PaymentComponent,
-    BayarComponent
+    BayarComponent,
+    BankComponent
   ],
   imports: [
     BrowserModule,

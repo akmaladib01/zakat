@@ -54,7 +54,7 @@ ipcMain.on('register-payer', (event, formData) => {
 // Fetch user
 ipcMain.on('fetch-payer', (event, { searchValue, profileID, isSearchByName }) => {
   const stmt = db.prepare(`
-    SELECT idNumber, name, identificationID, address1, address2, postcode, city, state, phoneNumber, email, profileID
+    SELECT payerID, idNumber, name, identificationID, address1, address2, postcode, city, state, phoneNumber, email, profileID
     FROM PAYER
     WHERE profileID = ? AND ${isSearchByName ? 'name LIKE ?' : 'idNumber = ?'}
   `);

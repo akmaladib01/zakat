@@ -1,0 +1,22 @@
+/* Center the button in its container */
+.next-button-container {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    margin-top: 20px; /* Space from the form container */
+    width: 100%;  /* Ensure it takes full width of the container */
+  }
+  
+  .seterusnya-button {
+    padding: 10px 20px;  /* Smaller padding */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;  /* Green background */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: auto;  /* Ensure the button width is automatic */
+    max-width: 180px;  /* Set a maximum width */
+    text-align: center;  /* Center the text */
+  }
