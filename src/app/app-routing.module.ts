@@ -12,7 +12,7 @@ const routes: Routes = [
   // Route for searching (explicit)
   { path: 'search', component: SearchingComponent },
 
-  { path: 'bank', component: BankComponent },
+  { path: 'bank/:payerID', component: BankComponent },
 
   { path: 'payment/:payerID', component: PaymentComponent },
 

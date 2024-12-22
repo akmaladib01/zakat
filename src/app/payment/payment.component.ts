@@ -12,7 +12,7 @@ import { ZakatService } from '../services/zakat.service';
 })
 export class PaymentComponent implements OnInit {
   zakatForm: FormGroup;
-  zakatList: { jenis: string; amount: number }[] = [];
+  zakatList: { jenis: string; id: number; amount: number }[] = [];
   typeZakat = [
     'Emas Bukan Perhiasan',
     'Emas Perhiasan',
@@ -29,6 +29,24 @@ export class PaymentComponent implements OnInit {
     'Takaful',
     'Kripto dan Aset Digital',
   ];
+
+    // Mapping of zakat types to their corresponding IDs
+    typeZakatMapping: { [key: string]: number } = {
+      'Emas Bukan Perhiasan': 46,
+      'Emas Perhiasan': 47,
+      'Harta': 48,
+      'KWSP': 49,
+      'Tanaman (Padi)': 50,
+      'Pendapatan': 51,
+      'Perak': 52,
+      'Perniagaan': 53,
+      'Qadha': 54,
+      'Saham dan Pelaburan': 55,
+      'Simpanan': 56,
+      'Ternakan': 57,
+      'Takaful': 58,
+      'Kripto dan Aset Digital': 59,
+    };
 
   payerID: string = '';
 
@@ -58,9 +76,17 @@ export class PaymentComponent implements OnInit {
   saveZakat(): void {
     if (this.zakatForm.valid) {
       const { jenisZakat, amount } = this.zakatForm.value;
-      this.zakatList = [...this.zakatList, { jenis: jenisZakat, amount }];
-      this.zakatForm.reset();
-      this.cdr.detectChanges();
+      const zakatId = this.typeZakatMapping[jenisZakat];
+      if (zakatId) {
+        this.zakatList = [
+          ...this.zakatList,
+          { jenis: jenisZakat, amount, id: zakatId },
+        ];
+        this.zakatForm.reset();
+        this.cdr.detectChanges();
+      } else {
+        alert('Jenis zakat tidak sah.');
+      }
     } else {
       alert('Sila lengkapkan semua medan.');
     }
@@ -83,7 +109,9 @@ export class PaymentComponent implements OnInit {
   }  
 
   goToBank(): void {
-    this.zakatService.setZakatList(this.zakatList);
-    this.router.navigate(['/bank']);
-  }  
+    // Map zakatList to only include id and amount
+    const zakatListForBank = this.zakatList.map(({ jenis, id, amount }) => ({ jenis, id, amount }));
+    this.zakatService.setZakatList(zakatListForBank);
+    this.router.navigate(['/bank', this.payerID]);
+  }
 }

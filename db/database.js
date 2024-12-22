@@ -8,6 +8,7 @@ const schemaPath = path.join(__dirname, 'schema.sql');
 
 let db;
 
+
 // Initialize the database
 function initializeDatabase() {
   if (!fs.existsSync(dbPath)) {

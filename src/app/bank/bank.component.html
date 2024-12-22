@@ -1,4 +1,85 @@
+<div class="container">
+  <!-- Left Side: Form -->
+  <div class="left-side">
+    <form [formGroup]="bankForm" (ngSubmit)="saveBankPayment()" class="payment-form">
+      <!-- Section Title -->
+      <div class="form-section-title">
+        <h3>Maklumat Pembayaran</h3>
+      </div>
+
+      <!-- Row 1: Cara Pembayaran (Payment Method) & Date -->
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="caraPembayaran">Cara Pembayaran *</label>
+          <select id="caraPembayaran" formControlName="caraPembayaran" (change)="onPaymentMethodChange()">
+            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+          </select>
+        </div>
+        <div class="form-group half-width">
+          <label for="paymentDate">Tarikh Pembayaran *</label>
+          <input id="paymentDate" formControlName="paymentDate" type="date" required />
+        </div>
+      </div>
+
+      <!-- Row 2: Bank Selection and No Cheque, only visible when 'Cheque' is selected -->
+      <div class="form-row" *ngIf="isChequeSelected">
+        <div class="form-group half-width">
+          <label for="bank">Pilih Bank *</label>
+          <select id="bank" formControlName="bank">
+            <option *ngFor="let bank of bankList" [value]="bank">{{ bank }}</option>
+          </select>
+        </div>
+        <div class="form-group half-width">
+          <label for="noCheque">No Cheque</label>
+          <input id="noCheque" formControlName="noCheque" />
+        </div>
+      </div>
+
+      <!-- Row 3: Total Amount -->
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="totalAmount">Jumlah Bayaran (RM) *</label>
+          <input id="totalAmount" formControlName="totalAmount" type="number" min="1"/>
+        </div>
+      </div>
+
+      <!-- Row 4: Buttons -->
+      <div class="form-row buttons-row">
+        <button type="submit" class="btn btn-submit">Simpan</button>
+        <button type="button" class="btn btn-cancel" (click)="goBack()">Kembali</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Right Side: Selected Information -->
+  <div class="right-side">
+    <h3>Maklumat Pembayaran</h3>
+    <ul class="payment-info">
+      <li>
+        <strong>Cara Pembayaran:</strong> {{ submittedPaymentData.caraPembayaran }}
+      </li>
+      <li>
+        <strong>Tarikh Pembayaran:</strong> {{ submittedPaymentData.paymentDate }}
+      </li>
+      <li *ngIf="submittedPaymentData.caraPembayaran === 'CHEQUE'">
+        <strong>Bank:</strong> {{ submittedPaymentData.bank }}
+      </li>
+      <li *ngIf="submittedPaymentData.caraPembayaran === 'CHEQUE'">
+        <strong>No Cheque:</strong> {{ submittedPaymentData.noCheque }}
+      </li>
+      <li>
+        <strong>Jumlah Bayaran:</strong> RM{{ submittedPaymentData.totalAmount }}
+      </li>
+    </ul>
+
+    <!-- Delete Button shown only after data is submitted -->
+    <button *ngIf="submittedPaymentData.caraPembayaran" type="button" class="btn-icon" (click)="deletePaymentData()">
+      <i class="fa fa-trash"></i> Delete
+    </button>
+  </div>
+</div>
+
 <!-- Outside the container, below -->
 <div class="next-button-container">
-    <button class="btn-submit seterusnya-button" (click)="goBack()">Seterusnya</button>
-  </div>
+  <button class="btn-submit seterusnya-button" (click)="bayar()">Bayar</button>
+</div>

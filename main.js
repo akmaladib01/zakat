@@ -2,10 +2,12 @@ const { app, BrowserWindow, dialog } = require('electron');
 const path = require('path');
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
+const { initializeCounter } = require('./ipc/paymentHandlers');
 
-require('./db/database'); // Initialize database
-require('./ipc/userHandlers'); // Load IPC Handlers
-require('./ipc/companyHandlers'); // Load IPC Handlers
+require('./db/database'); 
+require('./ipc/userHandlers');
+require('./ipc/companyHandlers');
+require('./ipc/paymentHandlers');
 
 let mainWindow;
 
@@ -82,6 +84,7 @@ function setupAutoUpdater() {
 app.on('ready', () => {
   createWindow();
   setupAutoUpdater();
+  initializeCounter();
 });
 
 app.on('window-all-closed', () => {

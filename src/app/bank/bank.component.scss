@@ -1,22 +1,237 @@
+/* Base container styles */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 5px; /* Reduced padding */
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  max-height: 600px; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable scrolling if content exceeds max height */
+  border-radius: 8px; /* Optional: Add rounding for aesthetic */
+}
+
+.left-side,
+.right-side {
+  flex: 1;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2,
+h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+/* Buttons and Actions */
+.buttons-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center; /* Center the buttons */
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+  }
+}
+
+/* Specific styling for the delete button (red color) */
+.btn-icon {
+  background-color: #ff4d4d; /* Red background */
+  color: #fff; /* White text */
+  border: none;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.fa-trash {
+  font-size: 1.2rem; /* Icon size */
+}
+
+/* Bank List Styles */
+.bank-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  width: 100%; /* Ensure the list takes up full width */
+}
+
+.bank-list li {
+  margin-bottom: 10px;
+  padding: 10px; /* Add padding for better spacing */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Similar shadow as zakat list */
+  font-size: 1rem; /* Set font size to match the zakat list */
+  color: #333; /* Text color */
+}
+
+.total-amount {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #333;
+}
+
+/* For making the bank list similar to zakat list */
+.bank-list li:hover {
+  background-color: #f1f1f1; /* Highlight when hovered */
+  border-color: #007bff; /* Border color change on hover */
+}
+
+/* Form Row for Payment Method and Date */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Space between the two elements */
+  align-items: center; /* Ensures vertical alignment */
+}
+
+.half-width {
+  flex: 1;
+  max-width: calc(50% - 10px); /* Ensures equal width, accounting for gap */
+}
+
+.full-width {
+  flex: 1;
+  max-width: calc(100% - 10px); /* Ensures equal width, accounting for gap */
+}
+
+#paymentMethod,
+#paymentDate {
+  width: 100%; /* Ensure full width within the half-width container */
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box; /* Prevent overflow due to padding */
+}
+
+#totalAmount {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Dropdown Styling */
+select {
+  max-height: 150px;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+select option {
+  white-space: nowrap;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .left-side,
+  .right-side {
+    width: 100%;
+  }
+
+  /* Adjust styles for smaller screens */
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .half-width {
+    max-width: 100%; /* Full width on small screens */
+  }
+
+  select,
+  input {
+    width: 100%;
+  }
+}
+
 /* Center the button in its container */
 .next-button-container {
-    display: flex;
-    justify-content: center;  /* Center horizontally */
-    margin-top: 20px; /* Space from the form container */
-    width: 100%;  /* Ensure it takes full width of the container */
-  }
-  
-  .seterusnya-button {
-    padding: 10px 20px;  /* Smaller padding */
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #28a745;  /* Green background */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: auto;  /* Ensure the button width is automatic */
-    max-width: 180px;  /* Set a maximum width */
-    text-align: center;  /* Center the text */
-  }
+  display: flex;
+  justify-content: center;  /* Center horizontally */
+  margin-top: 20px; /* Space from the form container */
+  width: 100%;  /* Ensure it takes full width of the container */
+}
+
+.seterusnya-button {
+  padding: 10px 20px;  /* Smaller padding */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;  /* Green background */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: auto;  /* Ensure the button width is automatic */
+  max-width: 180px;  /* Set a maximum width */
+  text-align: center;  /* Center the text */
+}
