@@ -5,12 +5,14 @@ import { SearchingComponent } from './searching/searching.component';
 import { CompanyComponent } from './company/company.component';
 import { PaymentComponent } from './payment/payment.component';
 import { BankComponent } from './bank/bank.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
-  { path: '', component: SearchingComponent }, // Default route for the searching page
+  { path: '', component: LoginComponent }, // Default route for the searching page
 
   // Route for searching (explicit)
   { path: 'search', component: SearchingComponent },
+  
 
   { path: 'bank/:payerID', component: BankComponent },
 

@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentComponent } from './payment/payment.component';
 import { BankComponent } from './bank/bank.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BankComponent } from './bank/bank.component';
     SearchingComponent,
     CompanyComponent,
     PaymentComponent,
-    BankComponent
+    BankComponent,
+    LoginComponent
 
   ],
   imports: [

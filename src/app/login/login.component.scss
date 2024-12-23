@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-size: cover; /* Ensure the image covers the container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .login-box {
+      background: linear-gradient(45deg, #4373d8, #5fbfef);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      width: 300px;
+      text-align: center;
+  
+      label {
+        color: #fff;
+        display: block;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+  
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: none;
+        border-radius: 5px;
+      }
+  
+      .options {
+        text-align: right;
+        margin-bottom: 1rem;
+  
+        a {
+          color: #ffcc33;
+          text-decoration: none;
+          font-size: 0.9rem;
+        }
+      }
+  
+      button {
+        width: 100%;
+        padding: 0.7rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffcc33;
+        color: #4b0d77;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          background-color: #e6b800;
+        }
+      }
+    }
+  }
+  

@@ -80,6 +80,28 @@ CREATE TABLE IF NOT EXISTS "TRANSACTION_ZAKAT" (
 	FOREIGN KEY("zakatID") REFERENCES "CODE"("codeID")
 );
 
+-- Create the USER table
+CREATE TABLE IF NOT EXISTS "USER" (
+	"userID"	INTEGER PRIMARY KEY,
+	"domainEmail"	TEXT,
+    "fullname"    TEXT,
+	"phone_number"	TEXT
+);
+
+-- Create the SESSION table
+CREATE TABLE IF NOT EXISTS "SESSION" (
+	"sessionID"	INTEGER PRIMARY KEY,
+    "hostname"    TEXT,
+	"ip_address"	TEXT,
+	"date"	DATE,
+	"clock_in"	TIMESTAMP,
+	"clock_out"	TIMESTAMP,
+	"sessionStat"	TEXT,
+	"userID"	INTEGER,
+	FOREIGN KEY("userID") REFERENCES "USER"("userID")
+
+);
+
 -- Insert data into CODE table
 INSERT OR IGNORE INTO "CODE" (codeID, codeType, codeValue) VALUES
 -- Bank Codes

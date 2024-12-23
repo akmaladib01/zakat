@@ -8,6 +8,7 @@ require('./db/database');
 require('./ipc/userHandlers');
 require('./ipc/companyHandlers');
 require('./ipc/paymentHandlers');
+require('./ipc/loginHandlers');
 
 let mainWindow;
 
