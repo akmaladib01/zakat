@@ -1,0 +1,79 @@
+/* General Styles */
+mat-card {
+    width: 100%;
+    max-width: 1200px; /* Full width for larger screens */
+    margin: 10px auto;
+    padding: 10px 15px; /* Compact padding */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  mat-card-title {
+    font-size: 18px; /* Smaller title font size */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  
+  h3 {
+    font-size: 14px; /* Smaller section heading font size */
+    font-weight: bold;
+    margin: 5px 0;
+    color: #3f51b5;
+  }
+  
+  /* Form Grid Styles */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three-column layout */
+    gap: 8px; /* Smaller gaps between fields */
+  }
+  
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 5px; /* Compact spacing between fields */
+    font-size: 14px; /* Smaller font for field labels */
+  }
+  
+  .mat-form-field-wrapper {
+    padding-bottom: 3px; /* Reduce form field padding */
+  }
+  
+  .mat-input-element {
+    font-size: 14px; /* Smaller font for inputs */
+    height: 32px; /* Reduce input height */
+    padding: 2px 8px; /* Compact input padding */
+  }
+  
+  /* Section Styles */
+  .section {
+    margin-bottom: 10px;
+    padding: 5px 10px; /* Compact section padding */
+    border-left: 2px solid #3f51b5; /* Slim section highlight */
+    background: #f9f9f9;
+    border-radius: 3px;
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px; /* Smaller gap between buttons */
+    margin-top: 5px; /* Compact spacing above buttons */
+  }
+  
+  button {
+    min-width: 90px; /* Smaller button size */
+    font-size: 12px; /* Compact button text */
+    padding: 3px 8px;
+  }
+  
+  button[color="primary"] {
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  button[color="warn"] {
+    background-color: #f44336;
+    color: white;
+  }
+  

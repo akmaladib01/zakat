@@ -1,0 +1,84 @@
+<mat-card class="search-card">
+    <mat-card-title>Search for Company</mat-card-title>
+    <mat-card-content>
+      <div class="search-selection-container">
+        <!-- Card for Search by Company Name -->
+        <mat-card
+          [class.selected-card]="searchCriteria === 'name'"
+          (click)="setSearchCriteria('name')"
+          class="selection-card"
+        >
+          <mat-card-content>
+            <p>Search by Company Name</p>
+          </mat-card-content>
+        </mat-card>
+  
+        <!-- Card for Search by Registration Number -->
+        <mat-card
+          [class.selected-card]="searchCriteria === 'registrationNumber'"
+          (click)="setSearchCriteria('registrationNumber')"
+          class="selection-card"
+        >
+          <mat-card-content>
+            <p>Search by Registration Number</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  
+      <!-- Form for Company Name -->
+      <mat-form-field
+        *ngIf="searchCriteria === 'name'"
+        appearance="outline"
+        class="full-width"
+      >
+        <mat-label>Company Name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="companyName"
+          placeholder="Enter company name"
+        />
+      </mat-form-field>
+  
+      <!-- Form for Company Registration Number -->
+      <mat-form-field
+        *ngIf="searchCriteria === 'registrationNumber'"
+        appearance="outline"
+        class="full-width"
+      >
+        <mat-label>Company Registration Number</mat-label>
+        <input
+          matInput
+          [(ngModel)]="registrationNumber"
+          placeholder="Enter registration number"
+        />
+      </mat-form-field>
+      
+      <div *ngIf="companies && companies.length > 0" class="results-container">
+        <mat-list>
+          <mat-list-item *ngFor="let company of companies" (click)="viewCompanyDetails(company)">
+            <div class="company-info">
+              <!-- Company Name -->
+              <div mat-line class="company-name">{{ company.name }}</div>
+              <!-- Formatted Address -->
+              <div mat-line class="company-address">{{ getFormattedAddress(company) }}</div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      
+  
+      <div class="button-container">
+        <button mat-raised-button color="primary" [disabled]="isSearching" (click)="searchCompany()">
+          <mat-icon>search</mat-icon> Search
+        </button>
+        <button mat-raised-button color="warn" (click)="RegisterCompany()">
+          <mat-icon>add_circle</mat-icon> Register New Company
+        </button>
+        <button mat-raised-button color="accent" (click)="clearResults()">
+          <mat-icon>clear</mat-icon> Clear Results
+        </button>
+        <button class="btn-back" (click)="goBack()">Back</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  

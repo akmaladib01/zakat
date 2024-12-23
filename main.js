@@ -9,6 +9,10 @@ require('./ipc/userHandlers');
 require('./ipc/companyHandlers');
 require('./ipc/paymentHandlers');
 require('./ipc/loginHandlers');
+require('./ipc/searchCompanySPG');
+require('./ipc/companySPGregistration');
+require('./ipc/companySPGpayment');
+
 
 let mainWindow;
 

@@ -11,6 +11,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentComponent } from './payment/payment.component';
 import { BankComponent } from './bank/bank.component';
 import { LoginComponent } from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { SpgModule } from './spg/spg.module'; // import SpgModule
+import { SpgRoutingModule } from './spg/spg-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +24,8 @@ import { LoginComponent } from './login/login.component';
     CompanyComponent,
     PaymentComponent,
     BankComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
 
   ],
   imports: [
@@ -29,6 +34,8 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     FormsModule,
     MatSnackBarModule,
+    SpgRoutingModule, 
+    SpgModule
   ],
   providers: [
     provideAnimationsAsync()

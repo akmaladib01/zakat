@@ -1,0 +1,139 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        {{ isRegistering ? 'Register New Company' : (company.idNumber ? 'Update Company Details' : 'Register New Company') }}
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form #companyForm="ngForm" (ngSubmit)="company.payerID ? updatePayer() : registerCompany()">
+        <!-- Company Details Section -->
+        <div class="section">
+          <h3>Company Details</h3>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Company Registration Number</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.idNumber" name="idNumber" [readonly]="isEditMode" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Company Name</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.name" name="name" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Sector</mat-label>
+              <mat-select required [(ngModel)]="company.sector" name="sector">
+                <mat-option value="Kerajaan">Kerajaan</mat-option>
+                <mat-option value="Swasta">Swasta</mat-option>
+                <mat-option value="Lain-lain">Lain-lain</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <!-- Address Details Section -->
+        <div class="section">
+          <h3>Address Details</h3>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 1</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.address1" name="address1" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Address Line 2</mat-label>
+              <input matInput type="text" [(ngModel)]="company.address2" name="address2" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Postcode</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.postcode" name="postcode" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.city" name="city" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.state" name="state" />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <!-- Ownership and Workforce Section -->
+        <div class="section">
+          <h3>Ownership and Workforce</h3>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Muslim Staff</mat-label>
+              <input matInput type="number" [(ngModel)]="company.muslimStaff" name="muslimStaff" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Ownership Percentage</mat-label>
+              <input matInput type="number" [(ngModel)]="company.ownershipPercentage" name="ownershipPercentage" />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <!-- Contact Details Section -->
+        <div class="section">
+          <h3>Contact Details</h3>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>Phone Number</mat-label>
+              <input matInput type="tel" required [(ngModel)]="company.phoneNumber" name="phoneNumber" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" required [(ngModel)]="company.email" name="email" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Fax Number</mat-label>
+              <input matInput type="tel" [(ngModel)]="company.faxnumber" name="faxnumber" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>Website</mat-label>
+              <input matInput type="text" [(ngModel)]="company.website" name="website" />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <!-- PIC (Person in Charge) Details Section -->
+        <div class="section">
+          <h3>PIC (Person in Charge) Details</h3>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>PIC Name</mat-label>
+              <input matInput type="text" required [(ngModel)]="company.PICName" name="PICName" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>PIC Email</mat-label>
+              <input matInput type="email" required [(ngModel)]="company.PICEmail" name="PICEmail" />
+            </mat-form-field>
+  
+            <mat-form-field appearance="outline">
+              <mat-label>PIC Phone Number</mat-label>
+              <input matInput type="tel" required [(ngModel)]="company.PICPhoneNumber" name="PICPhoneNumber" />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <!-- Buttons -->
+        <div class="button-container">
+          <button mat-raised-button color="primary" (click)="isUpdateMode ? updatePayer() : registerCompany()">
+            {{ isUpdateMode ? 'Save' : 'Register' }}
+          </button>
+          <button *ngIf="company.payerID" mat-raised-button color="primary" [routerLink]="'/payment-process'"
+            [queryParams]="{ payerID: company.payerID }">
+            Payment
+          </button>
+          <button mat-raised-button color="warn" (click)="onBackButtonClick()">Back</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>

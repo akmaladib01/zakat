@@ -185,6 +185,10 @@ export class SearchingComponent {
     }
   }
 
+  onBack(): void{
+    this.router.navigate(['/dashboard']);
+  }
+
   openSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,

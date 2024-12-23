@@ -1,0 +1,32 @@
+<div class="receipt-container">
+    <mat-card>
+      <mat-card-header>
+        <h1 class="receipt-title">Payment Receipt</h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="section" *ngIf="companyDetails">
+          <h3>Company Details</h3>
+          <p><strong>Company Name:</strong> {{ companyDetails.name }}</p>
+          <p><strong>Registration Number:</strong> {{ companyDetails.idNumber }}</p>
+          <p><strong>Address:</strong> {{ companyDetails.address }}</p>
+        </div>  
+  
+        <div class="section">
+          <h3>Payment Details</h3>
+          <p><strong>Header ID:</strong> {{ paymentData.HeaderID }}</p>
+          <p><strong>Amount:</strong> RM {{ paymentData.Amaun }}</p>
+          <p><strong>Payment Method:</strong> 
+            {{ paymentData.MOPID === 1 ? 'Cheque' : 'Cash' }}
+          </p>
+          <p><strong>Cheque Number:</strong> {{ paymentData.noCheque }}</p>
+          <p><strong>Bank:</strong> {{ paymentData.bankID }}</p>
+          <p><strong>Month/Year:</strong> {{ paymentData.bulanTahun }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="printReceipt()">Print</button>
+        <button mat-button (click)="goBack()">Back</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  

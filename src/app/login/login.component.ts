@@ -31,7 +31,7 @@ export class LoginComponent {
     window['ipcRenderer'].on('login-response', (_, response) => {
       if (response.success) {
         // If login is successful, navigate to the kutipan page
-        this.router.navigate(['/search']);
+        this.router.navigate(['/dashboard']);
       } else {
         // Show error message if login fails
         this.errorMessage = response.message;

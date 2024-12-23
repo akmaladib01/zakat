@@ -35,8 +35,9 @@ CREATE TABLE IF NOT EXISTS "PAYER" (
 	"PICPhoneNumber"	TEXT,
 	"profileID"	INTEGER,
 	"identificationID"	INTEGER,
-	FOREIGN KEY("profileID") REFERENCES "PROFILE"("profile_id"),
-	FOREIGN KEY("identificationID") REFERENCES "IDENTIFICATION"("identificationID")
+	"syncStat"	INTEGER,
+	FOREIGN KEY("profileID") REFERENCES "PROFILE"("profile_id")
+	
 );
 
 -- Create the SPG table
@@ -48,7 +49,7 @@ CREATE TABLE IF NOT EXISTS "SPG" (
 	"Amaun"	REAL NOT NULL,
 	"isSynced"	INTEGER DEFAULT 0,
 	"bankID"	INTEGER,
-	"MOP"	TEXT,
+	"MOPID" INTEGER,
 	"payerID"	INTEGER,
 	FOREIGN KEY("bankID") REFERENCES "CODE"("codeID"),
 	FOREIGN KEY("payerID") REFERENCES "PAYER"("payerID")

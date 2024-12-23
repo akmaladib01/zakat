@@ -1,0 +1,201 @@
+.search-card {
+    width: 60%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Space between the buttons */
+    gap: 10px; /* Add space between the buttons */
+  
+    /* Optional: To center the buttons horizontally */
+    align-items: center;
+    margin-top: 16px;
+  }
+  
+  .action-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+  
+  .company-found {
+    font-size: 1.2rem;
+    color: #4caf50;
+    font-weight: bold;
+  }
+
+  .search-criteria {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  mat-radio-button {
+    margin-right: 20px;
+  }
+  
+ /* Style for the container holding the cards */
+.search-selection-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+/* Style for the cards */
+.selection-card {
+  width: 45%;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center; /* Center text inside the card */
+}
+
+/* Center and style the card header */
+.card-header {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+/* Style for selected card */
+.selected-card {
+  border: 2px solid #3f51b5;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+/* Hover effect on card */
+.selection-card:hover {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure cards have space between them */
+.selection-card + .selection-card {
+  margin-left: 20px;
+}
+
+/* Center the title in the mat-card */
+.mat-card-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Style for search results */
+mat-list {
+  margin-top: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  max-height: 300px; /* Limit height for scroll */
+  overflow-y: auto; /* Add scroll for overflow */
+}
+
+mat-list-item {
+  display: flex; /* Allow the items to grow with content */
+  flex-direction: column; /* Stack the content vertically */
+  padding: 10px 20px; /* Adjust padding to avoid clipping */
+  min-height: 60px; /* Ensure enough height to accommodate content */
+  align-items: flex-start; /* Align items to the start */
+  text-overflow: ellipsis; /* If text overflows, show '...' */
+  white-space: normal; /* Allow wrapping of long text */
+}
+
+
+.company-details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Last list item without bottom border */
+mat-list-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover effect for list items */
+mat-list-item:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for company name and registration number */
+mat-list-item h3[mat-line] {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #3f51b5;
+  margin-bottom: 5px;
+}
+
+mat-list-item p[mat-line] {
+  font-size: 0.9rem;
+  color: #757575;
+}
+
+/* Style for the 'No results found' message */
+mat-card {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  color: #757575;
+}
+
+/* Style for the search and register buttons */
+.button-container button {
+  width: 48%;
+  font-size: 1rem;
+}
+
+/* Add spacing between form and buttons */
+mat-form-field + .button-container {
+  margin-top: 20px;
+}
+
+h3, p {
+  margin: 0;
+  word-wrap: break-word; /* Ensure long words wrap to the next line */
+}
+
+.results-container {
+  margin-top: 20px;
+}
+
+.company-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.company-address {
+  font-size: 14px;
+  color: gray;
+}
+
+
+/* Style for the 'No results found' message */
+.no-results-card {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  color: #757575;
+}
+  
