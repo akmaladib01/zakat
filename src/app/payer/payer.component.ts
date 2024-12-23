@@ -102,20 +102,24 @@ export class PayerComponent implements OnInit {
     const formData = this.payerForm.value;
     window['ipcRenderer'].removeAllListeners('update-payer');
     window['ipcRenderer'].removeAllListeners('payer-updated');
-
+  
     if (!formData.profileID) { 
       this.openSnackBar('Profile ID is missing!');
       return;
     }
-
+  
     if (window['ipcRenderer']) {
       if (this.isNewRegistration) {
         // Register new payer
         window['ipcRenderer'].send('register-payer', formData);
-
+  
         window['ipcRenderer'].on('payer-registered', (_, result) => {
           if (result.success) {
             this.openSnackBar('Payer registered successfully.');
+            
+            // Patch the payerID into the form
+            this.payerForm.patchValue({ payerID: result.payerID });
+            this.isNewRegistration = false; // Mark as existing payer after registration
           } else {
             this.openSnackBar('Error registering payer: ' + result.error);
           }
@@ -123,7 +127,7 @@ export class PayerComponent implements OnInit {
       } else {
         // Update existing payer
         window['ipcRenderer'].send('update-payer', formData);
-
+  
         window['ipcRenderer'].on('payer-updated', (_, result) => {
           if (result.success) {
             this.openSnackBar('Payer updated successfully.');
@@ -133,7 +137,7 @@ export class PayerComponent implements OnInit {
         });
       }
     }
-  } 
+  }  
 
   ngOnDestroy(): void {
     // Reset the form and clear data when the component is destroyed
@@ -145,9 +149,14 @@ export class PayerComponent implements OnInit {
   }
 
   payment(): void {
-    const payerID = this.payerForm.get('payerID')?.value
-    this.router.navigate(['/payment', payerID])
+  const payerID = this.payerForm.get('payerID')?.value;
+  if (!payerID) {
+    this.openSnackBar('Payer ID is missing. Please save the form first.');
+    return;
   }
+  this.router.navigate(['/payment', payerID]);
+  }
+
 
   openSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {

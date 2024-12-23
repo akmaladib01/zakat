@@ -11,6 +11,7 @@ ipcMain.on('register-company', (event, formData) => {
   `);
 
   try {
+    // Execute the insertion
     stmt.run(
       formData.idNumber,
       formData.name,
@@ -31,11 +32,17 @@ ipcMain.on('register-company', (event, formData) => {
       formData.profileID,
       formData.identificationID
     );
-    event.reply('company-registered', { success: true });
+
+    // Fetch the last inserted payerID
+    const result = db.prepare('SELECT last_insert_rowid() AS payerID').get();
+    const payerID = result.payerID;
+
+    event.reply('company-registered', { success: true, payerID });
   } catch (error) {
     event.reply('company-registered', { success: false, error: error.message });
   }
 });
+
 
 // Fetch company
 ipcMain.on('fetch-company', (event, { searchValue, profileID, isSearchByName }) => {

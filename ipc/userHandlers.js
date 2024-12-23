@@ -45,7 +45,10 @@ ipcMain.on('register-payer', (event, formData) => {
       formData.email,
       formData.profileID
     );
-    event.reply('payer-registered', { success: true });
+    
+    const payerID = db.prepare('SELECT last_insert_rowid() AS payerID').get().payerID; // Fetch the last inserted payerID
+    console.log('Inserted payerID:', payerID);
+    event.reply('payer-registered', { success: true, payerID });
   } catch (error) {
     event.reply('payer-registered', { success: false, error: error.message });
   }

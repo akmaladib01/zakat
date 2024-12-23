@@ -20,6 +20,8 @@ function initializeDatabase() {
   } else {
     db = new Database(dbPath, { verbose: console.log });
     console.log('Existing database loaded.');
+    console.log(__dirname);
+    
   }
 
   // Enable foreign keys

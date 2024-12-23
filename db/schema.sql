@@ -7,12 +7,6 @@ CREATE TABLE IF NOT EXISTS "CODE" (
 	"codeValue"	TEXT NOT NULL
 );
 
--- Create the IDENTIFICATION table
-CREATE TABLE IF NOT EXISTS "IDENTIFICATION" (
-	"identificationID"	INTEGER PRIMARY KEY,
-	"identificationName"	TEXT NOT NULL
-);
-
 -- Create the PROFILE table
 CREATE TABLE IF NOT EXISTS "PROFILE" (
 	"profile_id"	INTEGER PRIMARY KEY,
@@ -54,10 +48,9 @@ CREATE TABLE IF NOT EXISTS "SPG" (
 	"Amaun"	REAL NOT NULL,
 	"isSynced"	INTEGER DEFAULT 0,
 	"bankID"	INTEGER,
-	"MOPID"	INTEGER,
+	"MOP"	TEXT,
 	"payerID"	INTEGER,
 	FOREIGN KEY("bankID") REFERENCES "CODE"("codeID"),
-	FOREIGN KEY("MOPID") REFERENCES "CODE"("codeID"),
 	FOREIGN KEY("payerID") REFERENCES "PAYER"("payerID")
 );
 
@@ -150,16 +143,7 @@ INSERT OR IGNORE INTO "CODE" (codeID, codeType, codeValue) VALUES
 (56, 'Z', 'SIMPANAN'),
 (57, 'Z', 'TERNAKAN'),
 (58, 'Z', 'TAKAFUL'),
-(59, 'Z', 'KRIPTO DAN ASET DIGITAL'),
-
--- Modes of Payment
-(60, 'M', 'CASH'),
-(61, 'M', 'CHEQUE');
-
--- Insert data into IDENTIFICATION table
-INSERT OR IGNORE INTO "IDENTIFICATION" (identificationID, identificationName) VALUES
-(1, 'KP Baru'),
-(2, 'SSM Lama');
+(59, 'Z', 'KRIPTO DAN ASET DIGITAL');
 
 -- Insert data into PROFILE table
 INSERT OR IGNORE INTO "PROFILE" (profile_id, profile_type) VALUES

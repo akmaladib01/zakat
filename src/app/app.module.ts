@@ -10,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PaymentComponent } from './payment/payment.component';
 import { BankComponent } from './bank/bank.component';
-import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { ToastrModule } from 'ngx-toastr';
     ReactiveFormsModule,
     FormsModule,
     MatSnackBarModule,
-    ToastrModule.forRoot() 
   ],
   providers: [
     provideAnimationsAsync()

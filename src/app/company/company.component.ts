@@ -109,29 +109,25 @@ export class CompanyComponent {
   //function submit data to db
   onSubmit(): void {
     const formData = this.payerForm.value;
-    window['ipcRenderer'].removeAllListeners('update-company');
-    window['ipcRenderer'].removeAllListeners('company-updated');
-    window['ipcRenderer'].removeAllListeners('company-registered');
 
-    if (!formData.profileID) { 
+    if (!formData.profileID) {
       this.openSnackBar('Profile ID is missing!');
       return;
     }
 
     if (window['ipcRenderer']) {
       if (this.isNewRegistration) {
-        // Register new payer
         window['ipcRenderer'].send('register-company', formData);
 
         window['ipcRenderer'].on('company-registered', (_, result) => {
           if (result.success) {
-            this.openSnackBar('Company registered successfully.');
+            this.payerForm.patchValue({ payerID: result.payerID });
+            this.openSnackBar('Company registered successfully');
           } else {
-            this.openSnackBar('Error registering payer: ' + result.error);
+            this.openSnackBar('Error registering company: ' + result.error);
           }
         });
       } else {
-        // Update existing payer
         window['ipcRenderer'].send('update-company', formData);
 
         window['ipcRenderer'].on('company-updated', (_, result) => {
@@ -143,7 +139,7 @@ export class CompanyComponent {
         });
       }
     }
-  } 
+  }
 
   ngOnDestroy(): void {
     // Reset the form and clear data when the component is destroyed
@@ -155,8 +151,8 @@ export class CompanyComponent {
   }
 
   payment(): void {
-    const payerID = this.payerForm.get('payerID')?.value
-    this.router.navigate(['/payment', payerID])
+    const payerID = this.payerForm.get('payerID')?.value;
+    this.router.navigate(['/payment', payerID]);
   }
 
   openSnackBar(message: string): void {

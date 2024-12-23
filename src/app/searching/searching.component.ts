@@ -160,7 +160,7 @@ export class SearchingComponent {
 
       window['ipcRenderer'].once('user-not-found', () => {
         this.isUserNotFound = true;
-        alert('User not found. Please search again or click "Daftar" to register.');
+        this.openSnackBar('User not found. Please search again or click "Daftar" to register.');
       });
     } else {
       console.error('ipcRenderer is not available.');
