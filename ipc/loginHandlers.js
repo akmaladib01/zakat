@@ -1,16 +1,9 @@
 const { ipcMain } = require('electron');
 const db = require('../db/database');
-const os = require('os'); // Import os module to fetch system hostname and IP address
-const networkInterfaces = os.networkInterfaces();
+const axios = require('axios'); // Import axios for HTTP requests
 
-ipcMain.on('login', (event, loginData) => {
+ipcMain.on('login', async (event, loginData) => {
   const { email, password } = loginData;
-
-  // Check if email domain is correct
-  if (!email.endsWith('@zakat.com')) {
-    event.reply('login-response', { success: false, message: 'Invalid email domain' });
-    return;
-  }
 
   // Fetch the user from the database
   const stmt = db.prepare('SELECT * FROM USER WHERE domainEmail = ?');
@@ -25,12 +18,22 @@ ipcMain.on('login', (event, loginData) => {
         VALUES (?, ?, ?, ?, ?, ?)
       `);
 
-      // Get the hostname of the device
-      const hostname = os.hostname();
-      const ipAddress = '127.0.0.1';
+      let hostname = '';
+      let ipAddress = ''; // Default values
+
+      try {
+        // Fetch hostname and IP address from localhost server
+        const response = await axios.get('http://localhost:5421/');
+        if (response.data) {
+          hostname = response.data.localData.hostName || hostname;
+          ipAddress = response.data.localData.ipAddress || ipAddress;
+        }
+      } catch (error) {
+        console.error('Error fetching hostname and IP address from localhost:', error);
+      }
 
       // Get current time (HH:MM:SS)
-      const currentTime = new Date().toLocaleTimeString('en-GB', { hour12: false });  // Format as HH:MM:SS
+      const currentTime = new Date().toLocaleTimeString('en-GB', { hour12: false }); // Format as HH:MM:SS
 
       // Current date (YYYY-MM-DD)
       const currentDate = new Date().toISOString().split('T')[0];
@@ -42,6 +45,7 @@ ipcMain.on('login', (event, loginData) => {
         sessionStmt.run(hostname, ipAddress, currentDate, currentTime, sessionStat, user.userID);
         event.reply('login-response', { success: true, message: 'Login successful', userID: user.userID });
       } catch (error) {
+        console.error('Error creating session:', error);
         event.reply('login-response', { success: false, message: 'Error creating session' });
       }
     } else {
@@ -51,4 +55,3 @@ ipcMain.on('login', (event, loginData) => {
     event.reply('login-response', { success: false, message: 'User not found' });
   }
 });
-

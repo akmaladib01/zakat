@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -37,18 +37,18 @@ export class PayerComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private location: Location, private snackBar: MatSnackBar) {
     this.payerForm = this.fb.group({
-      payerID: [''],
-      idNumber: [''],
-      name: [''],
-      identificationID: ['KP Baru'],
-      address1: [''],
+      payerID: ['',],
+      idNumber: ['', Validators.required],
+      name: ['', Validators.required],
+      identificationID: ['KP Baru', Validators.required],
+      address1: ['', Validators.required],
       address2: [''],
-      postcode: [''],
-      city: [''],
-      state: [''],
-      phoneNumber: [''],
-      email: [''],
-      profileID: [''],
+      postcode: ['', Validators.required],
+      city: ['', Validators.required],
+      state: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      email: ['', Validators.required],
+      profileID: ['', Validators.required],
     });
   }
 
@@ -63,10 +63,15 @@ export class PayerComponent implements OnInit {
       console.log('searchField:', searchField);
   
       // Autofill the profileID field
-      this.payerForm.patchValue({ profileID });
-      if (searchField === 'idNumber') {
-        this.payerForm.patchValue({ idNumber: searchValue });
-      }
+    this.payerForm.patchValue({ profileID });
+  
+    if (searchField === 'idNumber') {
+      // If the search is by idNumber, patch the idNumber field
+      this.payerForm.patchValue({ idNumber: searchValue });
+    } else if (searchField === 'name') {
+      // If the search is by name, patch the name field
+      this.payerForm.patchValue({ name: searchValue });
+    }
   
       // Fetch payer data from the backend
       if (window['ipcRenderer']) {
@@ -99,6 +104,14 @@ export class PayerComponent implements OnInit {
 
   //function submit into db
   onSubmit(): void {
+    // Mark all form controls as touched to trigger validation
+    this.markFormAsTouched();
+  
+    // If the form is invalid, show an error message and prevent submission
+    if (this.payerForm.invalid) {
+      return;
+    }
+  
     const formData = this.payerForm.value;
     window['ipcRenderer'].removeAllListeners('update-payer');
     window['ipcRenderer'].removeAllListeners('payer-updated');
@@ -137,7 +150,15 @@ export class PayerComponent implements OnInit {
         });
       }
     }
-  }  
+  }
+  
+  // Manually mark all form controls as touched
+  markFormAsTouched(): void {
+    Object.keys(this.payerForm.controls).forEach(field => {
+      const control = this.payerForm.get(field);
+      control?.markAsTouched();
+    });
+  }
 
   ngOnDestroy(): void {
     // Reset the form and clear data when the component is destroyed
@@ -161,7 +182,6 @@ export class PayerComponent implements OnInit {
   openSnackBar(message: string): void {
     this.snackBar.open(message, 'Close', {
       duration: 5000,
-      horizontalPosition: 'center',
       verticalPosition: 'top',
     });
   }

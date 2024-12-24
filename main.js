@@ -41,6 +41,8 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  // mainWindow.setFullScreen(true);
 }
 
 // Handle Auto-Updater Events

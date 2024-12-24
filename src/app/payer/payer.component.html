@@ -1,14 +1,16 @@
 <form [formGroup]="payerForm" (ngSubmit)="onSubmit()" class="payer-form">
-    <!-- Section Title -->
-    <div class="form-section-title">
-      <h3>Maklumat Pembayar</h3>
-    </div>
-  
-    <!-- Row 1: Name, ID Type and No. KP -->
+  <div class="form-section-title">
+    <h3>Maklumat Pembayar</h3>
+  </div>
+
+  <!-- Row 1: Name, ID Type and No. KP -->
   <div class="form-row">
     <div class="form-group half-width">
       <label for="name">Nama Penuh *</label>
-      <input id="name" formControlName="name"/>
+      <input id="name" formControlName="name" required />
+      <div *ngIf="payerForm.get('name')?.touched && payerForm.get('name')?.hasError('required')" class="error-message">
+        Nama Penuh is required.
+      </div>
     </div>
     <div class="form-group id-group half-width">
       <label for="identification">No. KP *</label>
@@ -16,60 +18,81 @@
         <select id="identificationID" formControlName="identificationID">
           <option *ngFor="let identificationID of typeID" [value]="identificationID">{{ identificationID }}</option>
         </select>
-        <input id="idNumber" formControlName="idNumber"/>
+        <input id="idNumber" formControlName="idNumber" required />
+        <div *ngIf="payerForm.get('idNumber')?.invalid && payerForm.get('idNumber')?.touched" class="error-message">
+          No. KP is required.
+        </div>
       </div>
     </div>
   </div>
-  
-    <!-- Row 2: Phone Number, Email -->
-    <div class="form-row">
-      <div class="form-group half-width">
-        <label for="phoneNumber">No. Tel. Bimbit *</label>
-        <input id="phoneNumber" formControlName="phoneNumber" />
-      </div>
-      <div class="form-group half-width">
-        <label for="email">Email *</label>
-        <input id="email" formControlName="email" type="email" />
+
+  <!-- Row 2: Phone Number, Email -->
+  <div class="form-row">
+    <div class="form-group half-width">
+      <label for="phoneNumber">No. Tel. Bimbit *</label>
+      <input id="phoneNumber" formControlName="phoneNumber" required />
+      <div *ngIf="payerForm.get('phoneNumber')?.invalid && payerForm.get('phoneNumber')?.touched" class="error-message">
+        No. Tel. Bimbit is required.
       </div>
     </div>
-  
-    <!-- Row 3: Address -->
-    <div class="form-row">
-      <div class="form-group full-width">
-        <label for="address1">Alamat *</label>
-        <input id="address1" formControlName="address1" />
+    <div class="form-group half-width">
+      <label for="email">Email *</label>
+      <input id="email" formControlName="email" type="email" required />
+      <div *ngIf="payerForm.get('email')?.invalid && payerForm.get('email')?.touched" class="error-message">
+        Valid Email is required.
       </div>
     </div>
-  
-    <!-- Row 4: Address 2 -->
-    <div class="form-row">
-      <div class="form-group full-width">
-        <input id="address2" formControlName="address2"/>
+  </div>
+
+  <!-- Row 3: Address -->
+  <div class="form-row">
+    <div class="form-group full-width">
+      <label for="address1">Alamat *</label>
+      <input id="address1" formControlName="address1" />
+      <div *ngIf="payerForm.get('address1')?.invalid && payerForm.get('address1')?.touched" class="error-message">
+        Alamat is required.
       </div>
     </div>
-  
-    <!-- Row 5: Postcode, City, State -->
-    <div class="form-row">
-      <div class="form-group one-third-width">
-        <label for="postcode">Poskod *</label>
-        <input id="postcode" formControlName="postcode"/>
-      </div>
-      <div class="form-group one-third-width">
-        <label for="city">Daerah *</label>
-        <input id="city" formControlName="city"/>
-      </div>
-      <div class="form-group one-third-width">
-        <label for="state">Negeri *</label>
-        <select id="state" formControlName="state">
-          <option *ngFor="let state of states" [value]="state">{{ state }}</option>
-        </select>
+  </div>
+
+  <!-- Row 4: Address 2 -->
+  <div class="form-row">
+    <div class="form-group full-width">
+      <input id="address2" formControlName="address2" />
+    </div>
+  </div>
+
+  <!-- Row 5: Postcode, City, State -->
+  <div class="form-row">
+    <div class="form-group one-third-width">
+      <label for="postcode">Poskod *</label>
+      <input id="postcode" formControlName="postcode" />
+      <div *ngIf="payerForm.get('postcode')?.invalid && payerForm.get('postcode')?.touched" class="error-message">
+        Poskod is required.
       </div>
     </div>
-  
-    <!-- Buttons -->
-    <div class="form-row buttons-row">
-      <button type="submit" class="btn btn-submit">Simpan</button>
-      <button type="button" class="btn btn-cancel" (click)="goBack()">Kembali</button>
-      <button type="button" class="btn btn-payment" (click)="payment()">Pembayaran</button>
+    <div class="form-group one-third-width">
+      <label for="city">Daerah *</label>
+      <input id="city" formControlName="city" />
+      <div *ngIf="payerForm.get('city')?.invalid && payerForm.get('city')?.touched" class="error-message">
+        Daerah is required.
+      </div>
     </div>
-  </form>
+    <div class="form-group one-third-width">
+      <label for="state">Negeri *</label>
+      <select id="state" formControlName="state">
+        <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+      </select>
+      <div *ngIf="payerForm.get('state')?.invalid && payerForm.get('state')?.touched" class="error-message">
+        Negeri is required.
+      </div>
+    </div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="form-row buttons-row">
+    <button type="submit" class="btn btn-submit" >Simpan</button>
+    <button type="button" class="btn btn-cancel" (click)="goBack()">Kembali</button>
+    <button type="button" class="btn btn-payment" (click)="payment()">Pembayaran</button>
+  </div>
+</form>

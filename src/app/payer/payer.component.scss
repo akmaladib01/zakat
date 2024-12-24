@@ -6,19 +6,18 @@
     border-radius: 10px;
     background-color: #f9f9f9;
 
-    #name {
-      text-transform: uppercase;
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin-top: 4px;
     }
 
-    #address1 {
-      text-transform: uppercase;
-    }
 
-    #address2 {
-      text-transform: uppercase;
-    }
-
-    #city {
+    #name,
+    #address1,
+    #address2,
+    #address2,
+    #address2{
       text-transform: uppercase;
     }
   
@@ -137,3 +136,5 @@
     font-size: 16px; /* Change the font size */
     padding: 16px;   /* Customize the padding */
   }
+
+  

@@ -10,11 +10,13 @@ import { SearchCompanyComponent } from './spg/search-company/search-company.comp
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  //{ path: '', component: SearchingComponent },
   { path: 'dashboard', component: DashboardComponent }, // Default route for the searching page
   { path: '', redirectTo: '/account/auth/landing-page', pathMatch: 'full' }, // Default route redirects to landing page
 
   { path: 'login', component: LoginComponent },
   { path: 'spg/search-company', component: SearchCompanyComponent },
+  { path: 'search-company', component: SearchCompanyComponent },
   { path: 'search', component: SearchingComponent },
   { path: 'bank/:payerID', component: BankComponent },
   { path: 'payment/:payerID', component: PaymentComponent },
