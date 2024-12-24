@@ -13,6 +13,7 @@ const routes: Routes = [
   //{ path: '', component: SearchingComponent },
   { path: 'dashboard', component: DashboardComponent }, // Default route for the searching page
   { path: '', redirectTo: '/account/auth/landing-page', pathMatch: 'full' }, // Default route redirects to landing page
+  //{ path: '', component: SearchCompanyComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'spg/search-company', component: SearchCompanyComponent },

@@ -1,9 +1,17 @@
 .search-card {
-    width: 60%;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  width: 80%; /* Adjust width to your desired size */
+  max-width: 800px; /* Set a maximum width to prevent it from becoming too large */
+  margin: 0 auto; /* Center horizontally */
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Optional: Add rounded corners */
+  
+  /* Center the card in the viewport */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
   
   .full-width {
     width: 100%;

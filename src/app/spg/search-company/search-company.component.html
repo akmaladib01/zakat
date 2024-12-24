@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <mat-card class="search-card">
     <mat-card-title>Search for Company</mat-card-title>
     <mat-card-content>
@@ -77,7 +79,8 @@
         <button mat-raised-button color="accent" (click)="clearResults()">
           <mat-icon>clear</mat-icon> Clear Results
         </button>
-        <button class="btn-back" (click)="goBack()">Back</button>
+        <button mat-raised-button color="primary" class="btn-back" (click)="goBack()">Back</button>
+
       </div>
     </mat-card-content>
   </mat-card>

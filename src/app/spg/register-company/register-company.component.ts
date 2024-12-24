@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../../services/database.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-company',
@@ -33,7 +34,21 @@ export class RegisterCompanyComponent implements OnInit {
     PICEmail: '',
     PICPhoneNumber: '',
     profileID: '2',
-    //syncStat: '0',
+  };
+
+  formErrors = {
+    idNumber: false,
+    name: false,
+    sector: false,
+    address1: false,
+    postcode: false,
+    city: false,
+    state: false,
+    phoneNumber: false,
+    email: false,
+    PICName: false,
+    PICEmail: false,
+    PICPhoneNumber: false
   };
 
   constructor(private dbService: DatabaseService, private router: Router, private route: ActivatedRoute) {}
@@ -57,43 +72,40 @@ export class RegisterCompanyComponent implements OnInit {
     try {
       const companyDetails = await window.electronAPI.getCompanyByPayerID(payerID);
       console.log('Fetched Company Details:', companyDetails);
-      console.log('Payer ID sent to register-company:', this.route.snapshot.queryParams['payerID']);
       if (companyDetails) {
         this.company = { ...companyDetails };
       } else {
-        alert('No company details found for the provided Payer ID.');
+        this.showAlert('No company details found for the provided Payer ID.', 'error');
       }
     } catch (error) {
       console.error('Error loading company details:', error);
-      alert('Failed to fetch company details.');
+      this.showAlert('Failed to fetch company details.', 'error');
     }
   }
 
   async updatePayer() {
-    if (this.isProcessing) {
+    if (this.isProcessing) return;
+    this.isProcessing = true;
+
+    if (!this.company.payerID) {
+      this.showAlert('Payer ID is missing. Cannot update the record.', 'error');
+      this.isProcessing = false;
       return;
     }
-    this.isProcessing = true;
-  
+
     try {
-      if (!this.company.payerID) {
-        alert('Payer ID is missing. Cannot update the record.');
-        return;
-      }
-  
-      console.log('Updating payer with ID:', this.company.payerID);
       const result = await window.electronAPI.updatePayer(this.company);
-  
+
       if (result) {
-        alert('Payer data updated successfully.');
+        this.showAlert('Payer data updated successfully!', 'success');
       } else {
-        alert('No changes were made. Verify Payer ID or data.');
+        this.showAlert('No changes were made. Verify Payer ID or data.', 'error');
       }
     } catch (error) {
       console.error('Error updating payer data:', error);
-      alert('An error occurred while updating the payer details.');
+      this.showAlert('An error occurred while updating the payer details.', 'error');
     }
-  
+
     this.isProcessing = false;
   }
 
@@ -103,38 +115,118 @@ export class RegisterCompanyComponent implements OnInit {
 
   async registerCompany() {
     if (this.isProcessing) return;
-  
     this.isProcessing = true;
   
     if (this.validateForm()) {
       try {
-        await this.dbService.registerCompany(this.company);
-        alert('Company registered successfully!');
+        // Register the company and capture the returned company object (including payerID)
+        const registeredCompany = await this.dbService.registerCompany(this.company);
+  
+        if (registeredCompany.success) {
+          // Company registered successfully
+          this.company.payerID = registeredCompany.payerID; // Set payerID
+  
+          // Show success message using SweetAlert2
+          Swal.fire({
+            title: 'Success!',
+            text: 'Company registered successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+  
+          // Ensure payerID is available and pass it to the /payment-process route
+          if (this.company.payerID) {
+            // Redirect to the /payment-process page with payerID as a query parameter
+            this.router.navigate(['/payment-process'], { queryParams: { payerID: this.company.payerID } });
+          } else {
+            // Handle the case where payerID is not available
+            Swal.fire({
+              title: 'Error!',
+              text: 'Payer ID could not be retrieved. Please try again.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        } else {
+          // Show error message using SweetAlert2 if company already exists
+          Swal.fire({
+            title: 'Error!',
+            text: registeredCompany.error,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
       } catch (error) {
         console.error('Error registering company:', error);
-        alert('Failed to register the company.');
+        // Show error message using SweetAlert2 for general errors
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to register the company.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     } else {
-      alert('Please fill in all required fields.');
+      // Show error message using SweetAlert2 if validation fails
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in all required fields correctly.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
   
     this.isProcessing = false;
   }
 
   validateForm(): boolean {
-    return (
-      this.company.idNumber &&
-      this.company.name &&
-      this.company.address1 &&
-      this.company.postcode &&
-      this.company.city &&
-      this.company.state &&
-      this.company.phoneNumber &&
-      this.company.email &&
-      this.company.sector &&
-      this.company.PICName &&
-      this.company.PICEmail &&
-      this.company.PICPhoneNumber
-    );
+    let isValid = true;
+    this.formErrors = {
+      idNumber: !this.company.idNumber,
+      name: !this.company.name,
+      sector: !this.company.sector,
+      address1: !this.company.address1,
+      postcode: !this.company.postcode || this.company.postcode.length !== 5,
+      city: !this.company.city,
+      state: !this.company.state,
+      phoneNumber: !this.company.phoneNumber || !this.isValidPhoneNumber(this.company.phoneNumber),
+      email: !this.company.email || !this.isValidEmail(this.company.email),
+      PICName: !this.company.PICName,
+      PICEmail: !this.company.PICEmail || !this.isValidEmail(this.company.PICEmail),
+      PICPhoneNumber: !this.company.PICPhoneNumber || !this.isValidPhoneNumber(this.company.PICPhoneNumber),
+    };
+  
+    // Show specific validation error messages
+    if (this.formErrors.postcode) {
+      this.showAlert('Postcode must be exactly 5 digits.', 'error');
+    }
+    if (this.formErrors.phoneNumber) {
+      this.showAlert('Phone number must be a valid format.', 'error');
+    }
+    if (this.formErrors.email) {
+      this.showAlert('Email must be a valid email address.', 'error');
+    }
+  
+    return Object.values(this.formErrors).every(error => !error);
+  }
+  
+  // Email validation
+  isValidEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+  
+  // Phone number validation (basic example, customize as needed)
+  isValidPhoneNumber(phone: string): boolean {
+    const phonePattern = /^[0-9]{10,}$/; // Matches a phone number with 10 or more digits
+    return phonePattern.test(phone);
+  }
+
+  showAlert(message: string, type: 'success' | 'error') {
+    Swal.fire({
+      icon: type,
+      title: type === 'success' ? 'Success' : 'Error',
+      text: message,
+    });
   }
 }

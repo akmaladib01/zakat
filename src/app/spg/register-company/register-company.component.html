@@ -1,139 +1,153 @@
 <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        {{ isRegistering ? 'Register New Company' : (company.idNumber ? 'Update Company Details' : 'Register New Company') }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form #companyForm="ngForm" (ngSubmit)="company.payerID ? updatePayer() : registerCompany()">
-        <!-- Company Details Section -->
-        <div class="section">
-          <h3>Company Details</h3>
-          <div class="form-grid">
-            <mat-form-field appearance="outline">
-              <mat-label>Company Registration Number</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.idNumber" name="idNumber" [readonly]="isEditMode" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Company Name</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.name" name="name" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Sector</mat-label>
-              <mat-select required [(ngModel)]="company.sector" name="sector">
-                <mat-option value="Kerajaan">Kerajaan</mat-option>
-                <mat-option value="Swasta">Swasta</mat-option>
-                <mat-option value="Lain-lain">Lain-lain</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+  <mat-card-header>
+    <mat-card-title>
+      {{ isRegistering ? 'Register New Company' : (company.idNumber ? 'Update Company Details' : 'Register New Company') }}
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #companyForm="ngForm" (ngSubmit)="company.payerID ? updatePayer() : registerCompany()">
+      <!-- Company Details Section -->
+      <div class="section">
+        <h3>Company Details</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" [ngClass]="{'error': idNumber.invalid && idNumber.touched}">
+            <mat-label>Company Registration Number</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.idNumber" name="idNumber" #idNumber="ngModel" [readonly]="isEditMode" />
+            <mat-error *ngIf="idNumber.invalid && idNumber.touched">Company Registration Number is required.</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" [ngClass]="{'error': name.invalid && name.touched}">
+            <mat-label>Company Name</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.name" name="name" #name="ngModel" />
+            <mat-error *ngIf="name.invalid && name.touched">Company Name is required.</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" [ngClass]="{'error': sector.invalid && sector.touched}">
+            <mat-label>Sector</mat-label>
+            <mat-select required [(ngModel)]="company.sector" name="sector" #sector="ngModel">
+              <mat-option value="Kerajaan">Kerajaan</mat-option>
+              <mat-option value="Swasta">Swasta</mat-option>
+              <mat-option value="Lain-lain">Lain-lain</mat-option>
+            </mat-select>
+            <mat-error *ngIf="sector.invalid && sector.touched">Sector is required.</mat-error>
+          </mat-form-field>
         </div>
-  
-        <!-- Address Details Section -->
-        <div class="section">
-          <h3>Address Details</h3>
-          <div class="form-grid">
-            <mat-form-field appearance="outline">
-              <mat-label>Address Line 1</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.address1" name="address1" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Address Line 2</mat-label>
-              <input matInput type="text" [(ngModel)]="company.address2" name="address2" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Postcode</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.postcode" name="postcode" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>City</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.city" name="city" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>State</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.state" name="state" />
-            </mat-form-field>
-          </div>
+      </div>
+
+      <!-- Address Details Section -->
+      <div class="section">
+        <h3>Address Details</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" [ngClass]="{'error': address1.invalid && address1.touched}">
+            <mat-label>Address Line 1</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.address1" name="address1" #address1="ngModel" />
+            <mat-error *ngIf="address1.invalid && address1.touched">Address Line 1 is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': address2.invalid && address2.touched}">
+            <mat-label>Address Line 2</mat-label>
+            <input matInput type="text" [(ngModel)]="company.address2" name="address2" #address2="ngModel" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': postcode.invalid && postcode.touched}">
+            <mat-label>Postcode</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.postcode" name="postcode" #postcode="ngModel" maxlength="5" />
+            <mat-error *ngIf="postcode.invalid && postcode.touched">Postcode is required and must be 5 digits.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': city.invalid && city.touched}">
+            <mat-label>City</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.city" name="city" #city="ngModel" />
+            <mat-error *ngIf="city.invalid && city.touched">City is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': state.invalid && state.touched}">
+            <mat-label>State</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.state" name="state" #state="ngModel" />
+            <mat-error *ngIf="state.invalid && state.touched">State is required.</mat-error>
+          </mat-form-field>
         </div>
-  
-        <!-- Ownership and Workforce Section -->
-        <div class="section">
-          <h3>Ownership and Workforce</h3>
-          <div class="form-grid">
-            <mat-form-field appearance="outline">
-              <mat-label>Muslim Staff</mat-label>
-              <input matInput type="number" [(ngModel)]="company.muslimStaff" name="muslimStaff" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Ownership Percentage</mat-label>
-              <input matInput type="number" [(ngModel)]="company.ownershipPercentage" name="ownershipPercentage" />
-            </mat-form-field>
-          </div>
+      </div>
+
+      <!-- Ownership and Workforce Section -->
+      <div class="section">
+        <h3>Ownership and Workforce</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" [ngClass]="{'error': muslimStaff.invalid && muslimStaff.touched}">
+            <mat-label>Muslim Staff</mat-label>
+            <input matInput type="number" [(ngModel)]="company.muslimStaff" name="muslimStaff" #muslimStaff="ngModel" />
+            <mat-error *ngIf="muslimStaff.invalid && muslimStaff.touched">Muslim Staff field is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': ownershipPercentage.invalid && ownershipPercentage.touched}">
+            <mat-label>Ownership Percentage</mat-label>
+            <input matInput type="number" [(ngModel)]="company.ownershipPercentage" name="ownershipPercentage" #ownershipPercentage="ngModel" />
+            <mat-error *ngIf="ownershipPercentage.invalid && ownershipPercentage.touched">Ownership Percentage field is required.</mat-error>
+          </mat-form-field>
         </div>
-  
-        <!-- Contact Details Section -->
-        <div class="section">
-          <h3>Contact Details</h3>
-          <div class="form-grid">
-            <mat-form-field appearance="outline">
-              <mat-label>Phone Number</mat-label>
-              <input matInput type="tel" required [(ngModel)]="company.phoneNumber" name="phoneNumber" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Email</mat-label>
-              <input matInput type="email" required [(ngModel)]="company.email" name="email" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Fax Number</mat-label>
-              <input matInput type="tel" [(ngModel)]="company.faxnumber" name="faxnumber" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>Website</mat-label>
-              <input matInput type="text" [(ngModel)]="company.website" name="website" />
-            </mat-form-field>
-          </div>
+      </div>
+
+      <!-- Contact Details Section -->
+      <div class="section">
+        <h3>Contact Details</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" [ngClass]="{'error': phoneNumber.invalid && phoneNumber.touched}">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="tel" required [(ngModel)]="company.phoneNumber" name="phoneNumber" #phoneNumber="ngModel" />
+            <mat-error *ngIf="phoneNumber.invalid && phoneNumber.touched">Phone Number is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': email.invalid && email.touched}">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" required [(ngModel)]="company.email" name="email" #email="ngModel" />
+            <mat-error *ngIf="email.invalid && email.touched">Valid Email is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': faxnumber.invalid && faxnumber.touched}">
+            <mat-label>Fax Number</mat-label>
+            <input matInput type="tel" [(ngModel)]="company.faxnumber" name="faxnumber" #faxnumber="ngModel" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': website.invalid && website.touched}">
+            <mat-label>Website</mat-label>
+            <input matInput type="text" [(ngModel)]="company.website" name="website" #website="ngModel" />
+          </mat-form-field>
         </div>
-  
-        <!-- PIC (Person in Charge) Details Section -->
-        <div class="section">
-          <h3>PIC (Person in Charge) Details</h3>
-          <div class="form-grid">
-            <mat-form-field appearance="outline">
-              <mat-label>PIC Name</mat-label>
-              <input matInput type="text" required [(ngModel)]="company.PICName" name="PICName" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>PIC Email</mat-label>
-              <input matInput type="email" required [(ngModel)]="company.PICEmail" name="PICEmail" />
-            </mat-form-field>
-  
-            <mat-form-field appearance="outline">
-              <mat-label>PIC Phone Number</mat-label>
-              <input matInput type="tel" required [(ngModel)]="company.PICPhoneNumber" name="PICPhoneNumber" />
-            </mat-form-field>
-          </div>
+      </div>
+
+      <!-- PIC (Person in Charge) Details Section -->
+      <div class="section">
+        <h3>PIC (Person in Charge) Details</h3>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" [ngClass]="{'error': PICName.invalid && PICName.touched}">
+            <mat-label>PIC Name</mat-label>
+            <input matInput type="text" required [(ngModel)]="company.PICName" name="PICName" #PICName="ngModel" />
+            <mat-error *ngIf="PICName.invalid && PICName.touched">PIC Name is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': PICEmail.invalid && PICEmail.touched}">
+            <mat-label>PIC Email</mat-label>
+            <input matInput type="email" required [(ngModel)]="company.PICEmail" name="PICEmail" #PICEmail="ngModel" />
+            <mat-error *ngIf="PICEmail.invalid && PICEmail.touched">Valid PIC Email is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" [ngClass]="{'error': PICPhoneNumber.invalid && PICPhoneNumber.touched}">
+            <mat-label>PIC Phone Number</mat-label>
+            <input matInput type="tel" required [(ngModel)]="company.PICPhoneNumber" name="PICPhoneNumber" #PICPhoneNumber="ngModel" />
+            <mat-error *ngIf="PICPhoneNumber.invalid && PICPhoneNumber.touched">PIC Phone Number is required.</mat-error>
+          </mat-form-field>
         </div>
-  
-        <!-- Buttons -->
-        <div class="button-container">
-          <button mat-raised-button color="primary" (click)="isUpdateMode ? updatePayer() : registerCompany()">
-            {{ isUpdateMode ? 'Save' : 'Register' }}
-          </button>
-          <button *ngIf="company.payerID" mat-raised-button color="primary" [routerLink]="'/payment-process'"
-            [queryParams]="{ payerID: company.payerID }">
-            Payment
-          </button>
-          <button mat-raised-button color="warn" (click)="onBackButtonClick()">Back</button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-container">
+        <button mat-raised-button color="primary" type="submit" [disabled]="companyForm.invalid">
+          {{ isUpdateMode ? 'Save' : 'Register' }}
+        </button>
+        <button *ngIf="company.payerID" mat-raised-button color="primary" [routerLink]="'/payment-process'"
+          [queryParams]="{ payerID: company.payerID }">
+          Payment
+        </button>
+        <button mat-raised-button color="warn" (click)="onBackButtonClick()">Back</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

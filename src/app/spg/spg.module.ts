@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Components
 import { SearchCompanyComponent } from './search-company/search-company.component';
@@ -24,6 +25,7 @@ import { ReceiptComponent } from './receipt/receipt.component';
 
 // Routing Module
 import { SpgRoutingModule } from './spg-routing.module';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { SpgRoutingModule } from './spg-routing.module';
     RegisterCompanyComponent,
     PaymentComponent,
     ReceiptComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -49,6 +52,7 @@ import { SpgRoutingModule } from './spg-routing.module';
     MatNativeDateModule,
     MatOptionModule,
     SpgRoutingModule,
+    ReactiveFormsModule
   ],
   exports: [
     SearchCompanyComponent,

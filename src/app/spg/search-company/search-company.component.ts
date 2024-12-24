@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-search-company',
   templateUrl: './search-company.component.html',
-  styleUrls: ['./search-company.component.scss'],
+  styleUrls: ['./search-company.component.scss']
 })
 export class SearchCompanyComponent {
   companyName: string = '';
   registrationNumber: string = '';
   address: string = '';
-  companies: any[] = []; 
+  companies: any[] = [];
   searchCriteria: string = 'name';
   searchPerformed: boolean = false;
   isSearching: boolean = false;
 
-  constructor(private dbService: DatabaseService, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private dbService: DatabaseService,
+    private router: Router
+  ) {}
 
   setSearchCriteria(criteria: string): void {
     this.searchCriteria = criteria;
@@ -38,15 +41,16 @@ export class SearchCompanyComponent {
         : this.registrationNumber;
 
     if (!searchValue) {
-      this.snackBar.open(
-        `Please enter a ${
+      Swal.fire({
+        title: 'Input Missing',
+        text: `Please enter a ${
           this.searchCriteria === 'name'
             ? 'Company Name'
             : 'Company Registration Number'
         }.`,
-        'Close',
-        { duration: 3000 }
-      );
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
       return;
     }
 
@@ -56,11 +60,12 @@ export class SearchCompanyComponent {
     );
 
     if (this.companies.length === 0) {
-      this.snackBar.open(
-        'No companies found. Please try a different search.',
-        'Close',
-        { duration: 3000 }
-      );
+      Swal.fire({
+        title: 'No Results Found',
+        text: 'No companies found. Please try a different search.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+      });
     }
   }
 
@@ -126,7 +131,12 @@ export class SearchCompanyComponent {
         state: { company: this.companies[0] },
       });
     } else {
-      alert('Please select or register a company first.');
+      Swal.fire({
+        title: 'No Company Selected',
+        text: 'Please select or register a company first.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
     }
   }
 

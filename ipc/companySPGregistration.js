@@ -133,11 +133,21 @@ ipcMain.handle('getCompanyByPayerID', (event, payerID) => {
 
   ipcMain.handle('registerCompany', (event, companyData) => {
     try {
-      // Define the insert query
+      // Check if the company already exists based on idNumber or name
+      const checkSql = `SELECT COUNT(*) AS count FROM PAYER WHERE idNumber = ? OR name = ?`;
+      const checkStmt = db.prepare(checkSql);
+      const checkResult = checkStmt.get(companyData.idNumber, companyData.name);
+  
+      if (checkResult.count > 0) {
+        // If company already exists, return an error
+        return { success: false, error: 'Company with this ID number or name already exists.' };
+      }
+  
+      // Define the insert query if the company doesn't exist
       const sql = `
         INSERT INTO PAYER 
         (idNumber, name, address1, address2, postcode, city, state, phoneNumber, email, sector,
-         faxnumber, website, muslimStaff, ownershipPercentage, PICName, PICEmail, PICPhoneNumber,
+        faxnumber, website, muslimStaff, ownershipPercentage, PICName, PICEmail, PICPhoneNumber,
         profileID, identificationID, syncStat)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
@@ -176,3 +186,4 @@ ipcMain.handle('getCompanyByPayerID', (event, payerID) => {
       return { success: false, error: error.message };
     }
   });
+  
