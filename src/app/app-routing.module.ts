@@ -16,7 +16,6 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'spg/search-company', component: SearchCompanyComponent },
-  { path: 'search-company', component: SearchCompanyComponent },
   { path: 'search', component: SearchingComponent },
   { path: 'bank/:payerID', component: BankComponent },
   { path: 'payment/:payerID', component: PaymentComponent },

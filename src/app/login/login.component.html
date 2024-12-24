@@ -3,16 +3,39 @@
     <div class="login-box">
       <form (ngSubmit)="login()">
         <label for="email">Email :</label>
-        <input type="email" id="email" [(ngModel)]="userData.email" name="email" placeholder="Enter your email" required />
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="userData.email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
 
-        <label for="password">Password :</label>
-        <input type="password" id="password" [(ngModel)]="userData.password" name="password" placeholder="Enter your password" required />
+        <!-- Dynamically show additional fields if the user is registering -->
+        <div *ngIf="isRegistering">
+          <label for="fullname">Full Name:</label>
+          <input
+            type="text"
+            id="fullname"
+            [(ngModel)]="userData.fullname"
+            name="fullname"
+            placeholder="Enter your full name"
+            required
+          />
 
-        <div class="options">
-          <a href="#">Forget Password ?</a>
+          <label for="phone">Phone Number:</label>
+          <input
+            type="text"
+            id="phone"
+            [(ngModel)]="userData.phone"
+            name="phone"
+            placeholder="Enter your phone number"
+            required
+          />
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit">{{ isRegistering ? 'Register' : 'Login' }}</button>
       </form>
 
       <!-- Display error message if login fails -->

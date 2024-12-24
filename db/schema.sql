@@ -85,7 +85,6 @@ CREATE TABLE IF NOT EXISTS "TRANSACTION_ZAKAT" (
 CREATE TABLE IF NOT EXISTS "USER" (
 	"userID"	INTEGER PRIMARY KEY,
 	"domainEmail"	TEXT,
-	"password"	TEXT,
     "fullname"    TEXT,
 	"phone_number"	TEXT
 );
